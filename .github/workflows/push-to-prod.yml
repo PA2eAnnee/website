@@ -1,6 +1,9 @@
 name: Push to prod
 
-on: push
+on: 
+  push:
+    branches:
+      - master
 
 jobs:
   push-to-prod:
