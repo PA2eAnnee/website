@@ -1,0 +1,137 @@
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+body>div{
+    width: 80vw;
+    height: 100vh;
+    overflow: scroll;
+}
+
+body>div::-webkit-scrollbar{
+    display: none;
+}
+
+
+#left-menu {
+    width:20vw;
+    overflow: hidden;
+    border-right: dashed lightgray 1px;
+    height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    font-family: 'Alumatica';
+}
+
+#left-menu::-webkit-scrollbar{
+    display: none;
+}
+
+#logoContainer {
+    width: 100%;
+    height: 250px;
+    background-image: url('../../../img/logo.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+#left-menu p{
+    color: rgb(99,115,129);
+    font-size: 0.8em
+}
+
+#userCard div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 1vw;
+}
+
+.card{
+    display: flex;
+    align-items: center;
+    padding: 0.7vh 1vw 0.7vh 1vw;
+    border-radius: 10px;
+    width: 15vw;
+    margin: auto;
+}
+
+.card.selected{
+    background-color: rgba(0, 167, 111, 0.08);
+}
+
+.card.selected p {
+    color: rgb(0, 167, 111) !important;
+    font-weight: bold;
+}
+
+.card.selected img {
+    filter: invert(40%) sepia(27%) saturate(2964%) hue-rotate(129deg) brightness(101%) contrast(101%) !important;
+}
+.card:hover:not(.selected){
+    background-color: rgba(145, 158, 171, 0.08);
+}
+
+.card img {
+    width: 1.5vw;
+    height: 1.5vw;
+    filter: invert(47%) sepia(13%) saturate(558%) hue-rotate(166deg) brightness(90%) contrast(87%);
+}
+
+.card-extendable {
+    position: relative;
+}
+
+.card-extendable img:last-child {
+    filter: none !important;
+    width: 1vw;
+    height: 1vw;
+    position: absolute;
+    right: 1vw;
+}
+
+.card p {
+    margin-left: 1vw;
+}
+
+.menu-section h5 {
+    text-transform: uppercase;
+    margin-left: 1.5vw;
+    color: grey
+}
+
+#user-options{
+    display: none;
+}
+
+#user-options li{
+    padding: 0.7vh 1vw 0.7vh 1vw;
+    border-radius: 10px;
+    width: 15vw;
+    margin: auto;
+    color: gray;
+}
+
+
+
+
+
+
+
+
+
+
+
+@font-face {
+    font-family: 'Alumatica';
+    src: url('../../fonts/Alumatica-Regular.woff2') format('woff2');
+    src: url('../../fonts/Alumatica-Regular.eot?') format('embedded-opentype'),
+         url('../../fonts/Alumatica-Regular.woff2') format('woff2'),
+         url('../../fonts/Alumatica-Regular.woff') format('woff'),
+         url('../../fonts/Alumatica-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

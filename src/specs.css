@@ -1,0 +1,27 @@
+#specs{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10vh;
+}
+
+.spec-card{
+    width: 17%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spec-card p{
+    text-align: center;
+    text-overflow: wrap;
+    font-family: Alumatica;
+}
+
+.spec-card h2{
+    text-align: center;
+    text-overflow: wrap;
+    font-family: Alumatica;
+    font-weight: bold;
+}

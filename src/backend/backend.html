@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>General: App | Minimal UI</title>
+        <link rel="stylesheet" href="css/left-menu.css">
+        <link rel="stylesheet" href="css/template.css">
+    </head>
+    <body>
+
+        <script src="js/left-menu.js"></script>
+        <aside id="left-menu">
+            <div id="logoContainer"></div>
+            
+            <section id="general" class="menu-section">
+                <h5>general</h5>
+                <div class="card selected" onclick="switchToLayout('home')">
+                    <img src="../img/house-solid.svg">
+                    <p>Accueil</p>
+                </div>
+            </section>
+            <section id="management" class="menu-section">
+                <h5>management</h5>
+                <div class="card card-extendable" id="user" onclick="toggleShow('user-options', 'user')">
+                    <img src="../img/user-solid.svg">
+                    <p>User</p>
+                    <img src="../img/chevron-right-solid.svg">
+                </div>
+                <ul id="user-options">
+                   <li>Profile</li>
+                   <li onclick="switchToLayout('list-users')">List</li>
+                   <li onclick="switchToLayout('cards-users')">Cards</li>
+                </ul>
+            </section>
+        </aside>
+        <div>
+            <header>
+                <div>
+                    <img src="../img/ic_flag_en.svg" width="30px" height="30px">
+                    <img src="../img/ic_flag_en.svg" width="30px" height="30px">
+                    <img src="../img/ic_flag_en.svg" width="30px" height="30px">
+                    <img src="../img/ic_flag_en.svg" width="30px" height="30px">
+                </div>
+            </header>
+            <iframe id="layouts-container" src="./backend-layouts/list-users.html"></iframe>
+        </div>
+    </body>
+</html>
