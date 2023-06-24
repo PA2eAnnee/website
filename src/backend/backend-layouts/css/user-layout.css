@@ -1,0 +1,31 @@
+
+
+.user-active, .user-banned{
+    text-transform: uppercase;
+    border-radius: 5px;
+    color: white;
+    width: 40%;
+    font-size: 0.7em;
+    height: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+}
+
+.user-active{
+    background-color: green;
+}
+
+.user-banned{
+    background-color: red;
+}
+
+main{
+    border-radius: 50px;
+    padding: 0;
+    border: solid rgb(244, 246, 248) 2px;
+    overflow: hidden;
+    position: relative;
+}

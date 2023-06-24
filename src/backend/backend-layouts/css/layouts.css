@@ -1,0 +1,192 @@
+body, html{
+    margin: 0;
+    padding: 0;
+    width: 100%; 
+    height:100%;
+    font-family: 'Alumatica';
+}
+.layout-path{
+    display: flex;
+    width: 30%;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+h3{
+    font-size: 1.3em;
+}
+
+.layout-path li{
+    list-style-type: none;
+}
+
+.layout-path li:last-child{
+    color: gray;
+}
+
+main{
+    margin: 5%;
+}
+
+.header-categ ul{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-around;
+    width: 30%;
+    height: 5vh;
+    align-items: center;
+}
+
+.header-categ{
+    width: 100%;
+    border-bottom: solid rgb(244, 246, 248) 2px;
+    background-color: rgb(244, 246, 248);
+    margin: 0;
+    position: absolute;
+    top: 0;
+}
+
+.list-checkbox{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+
+    border: solid 2px black;
+    border-radius: 5px;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.list-checkbox:checked{
+    background-color: green;
+    border-color: green;
+    content: url('../../../img/check-solid.svg');
+    filter: invert(100%) sepia(0%) saturate(7491%) hue-rotate(240deg) brightness(98%) contrast(105%);
+}
+
+#list-search{
+    width: 100%;
+    margin-top: 10vh;
+}
+
+#list-search form{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 7vh;
+    padding-top: 5vh;
+}
+
+#list-search select{
+    width: 18%;
+    text-align: center;
+    height: 100%;
+}
+#list-search input{
+    width: 78%;
+    height: 100%;
+}
+
+#list{
+    margin-top: 5vh;
+    width: 100%;
+}
+
+#list table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#list table thead, #list table tbody, #list table thead tr, #list table tbody tr{
+    width: 100%;
+}
+
+#list th, #list td{
+    text-align: start;
+}
+
+#list tr th:first-child, #list tr td:first-child{
+    text-align: center;
+}
+
+#list thead{
+    background-color: rgb(244, 246, 248);
+    height: 7vh;
+}
+
+#list-footer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 10vh;
+    background-color: rgb(244, 246, 248);
+}
+
+#list-footer form{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#list-footer form>div{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+
+
+
+
+
+
+@font-face {
+    font-family: 'Alumatica';
+    src: url('../../../fonts/Alumatica-Regular.woff2') format('woff2');
+    src: url('../../../fonts/Alumatica-Regular.eot?') format('embedded-opentype'),
+         url('../../../fonts/Alumatica-Regular.woff2') format('woff2'),
+         url('../../../fonts/Alumatica-Regular.woff') format('woff'),
+         url('../../../fonts/Alumatica-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    background-color: #eee;
+    border-radius: 20px;
+    border: solid lightgray 2px;
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: white;
+    top: 1px;
+    left: 1px;
+    transition: all 0.3s;
+}
+
+#dense-checkbox:checked + .switch::after {
+    left: 20px;
+}
+
+#dense-checkbox:checked + .switch {
+    background-color: #23ebaf;
+}
+
+#dense-checkbox {
+    display: none;
+}

@@ -1,0 +1,80 @@
+*{
+    box-sizing: border-box;
+}
+
+body, html{
+    margin:0;
+}
+
+form a{
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-top: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #001D48;
+}
+
+form a img{
+    filter: invert(7%) sepia(81%) saturate(3806%) hue-rotate(210deg) brightness(83%) contrast(101%);
+    margin-right: 1%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+input{
+    width: 55%;
+    height: 8%;
+    border: 2px solid #001D48;
+    border-radius: 5px;
+    text-align: center;
+}
+
+main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    background-image: url('../../img/background-register.jpg');
+    background-size: cover;
+    font-family: 'Alumatica';
+}
+
+button {
+    width: 30%;
+    height: 8%;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #001D48;
+    font-size: 1em;
+}
+
+
+
+
+
+
+
+
+
+@font-face {
+    font-family: 'Alumatica';
+    src: url('../../fonts/Alumatica-Regular.woff2') format('woff2');
+    src: url('../../fonts/Alumatica-Regular.eot?') format('embedded-opentype'),
+         url('../../fonts/Alumatica-Regular.woff2') format('woff2'),
+         url('../../fonts/Alumatica-Regular.woff') format('woff'),
+         url('../../fonts/Alumatica-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

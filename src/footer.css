@@ -1,0 +1,41 @@
+footer{
+    background-color: #1d2f4d;
+    color: white;
+    font-family: Alumatica;
+    width: 100%;
+    margin-top: 10vh;
+}
+footer img{
+    filter: invert(96%) sepia(97%) saturate(12%) hue-rotate(237deg) brightness(103%) contrast(103%);
+}
+
+footer section{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding: 1% 3% 1% 3%;
+}
+
+footer section>div{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
+
+footer section>div>div{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+footer section:last-child{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid gray;
+}
+
+footer h3{
+    text-transform: uppercase;
+    border-bottom: 2px solid #23ebaf;
+}

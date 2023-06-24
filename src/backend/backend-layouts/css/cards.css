@@ -1,0 +1,23 @@
+.card {
+    width: 30%;
+    margin: 1.3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-radius: 30px;
+    overflow: hidden;
+    background-image: url('../../../img/bg-user.jpg');
+    height: 50%;
+    border: solid 2px rgb(244, 246, 248);
+}
+
+.card .card-content{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+    line-height: 50%;
+    padding: 2%;
+}
