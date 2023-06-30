@@ -1,5 +1,5 @@
 export class API{
-    static address = "http://www.cookmaster.best:8080";
+    static address = "https://api.cookmaster.best";
 
     static login(email, password){
         try{
