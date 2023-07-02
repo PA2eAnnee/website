@@ -32,7 +32,7 @@ export class API{
         try {
             return new Promise(resolve => {
             const getUsersRequest = new XMLHttpRequest();
-            getUsersRequest.open("GET", this.address + "/users");
+            getUsersRequest.open("POST", this.address + "/getusers");
             getUsersRequest.onreadystatechange = () => {
                 if(getUsersRequest.readyState === 4) {
                     if(getUsersRequest.status === 200) {
