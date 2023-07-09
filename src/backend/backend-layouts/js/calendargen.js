@@ -1,5 +1,5 @@
-import {Calendar} from './Calendar.js';
-import {CookMasterDate} from './CookMasterDate.js';
+import {Calendar} from './global/Calendar.js';
+import {CookMasterDate} from './global/CookMasterDate.js';
 
 let table;
 let cal;

@@ -3,6 +3,7 @@ export class List {
     container;
     searchCategs;
     theads;
+    addPopupType;
 
     display() {
         const searchSection = document.createElement("section");
@@ -21,8 +22,16 @@ export class List {
         searchBar.id = "list-search-input";
         searchBar.placeholder = "Search ...";
 
+        const addButton = document.createElement('button');
+        addButton.innerText = 'Add';
+        addButton.onclick = () => {
+            const addPopup = new this.addPopupType;
+            addPopup.generate();
+        };
+
         searchForm.appendChild(searchSelect);
         searchForm.appendChild(searchBar);
+        searchForm.appendChild(addButton);
 
         searchSection.appendChild(searchForm);
 
@@ -101,5 +110,9 @@ export class List {
 
     setTheads(theads) {
         this.theads = theads;
+    }
+
+    setAddPopupType(addPopupType) {
+        this.addPopupType = addPopupType;
     }
 }

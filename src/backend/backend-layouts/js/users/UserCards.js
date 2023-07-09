@@ -1,6 +1,6 @@
-import {Cards} from './Cards.js';
+import {Cards} from '../global/Cards.js';
 import {UserCard} from './UserCard.js';
-import {API} from './API.js';
+import {API} from '../global/API.js';
 
 export class UserCards extends Cards {
     constructor(container) {

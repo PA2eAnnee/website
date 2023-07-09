@@ -14,6 +14,7 @@ export class ListRow {
         checkbox.elemId = this.id;
         checkboxTd.appendChild(checkbox);
         this.row.appendChild(checkboxTd);
+        this.row.id = this.id;
         
     }
 
