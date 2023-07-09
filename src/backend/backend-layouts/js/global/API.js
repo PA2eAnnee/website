@@ -298,4 +298,35 @@ export class API{
             console.log(e);
         }
     }
+
+    static getLessons() {
+        try {
+            return new Promise(resolve => {
+            const getLessonRequest = new XMLHttpRequest();
+            getLessonRequest.open("POST", `${API.address}/getlessons`);
+            getLessonRequest.onreadystatechange = () => {
+                if(getLessonRequest.readyState === 4) {
+                    if(getLessonRequest.status === 200) {
+                        const result = JSON.parse(getLessonRequest.responseText);
+
+                            if(result.success === true){
+                                const lessons = result.lessons;
+                                resolve(lessons);
+                            }
+
+
+
+                    }
+                }
+            }
+                const token = API.getToken();
+                if(token) {
+                    getLessonRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getLessonRequest.send();
+        });
+        } catch(e) {
+            console.log(e);
+        }
+    }
 }
