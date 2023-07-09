@@ -2,6 +2,7 @@ export class Form {
     inputs;
     container;
     buttonText;
+    inPopup = true;
 
     constructor(container, buttonText) {
         this.container = container;
@@ -44,7 +45,12 @@ export class Form {
     validate() {
         this.cleanErrors();
         for(const input of this.inputs) {
-            input.value = parent.document.getElementById(input.name).value;
+            if(this.inPopup) {
+                input.value = parent.document.getElementById(input.name).value;
+            } else {
+                input.value = document.getElementById(input.name).value;
+            }
+            
 
             if(input.required === true && !input.value) {
                 this.addError("Field " + input.placeholder + " is required", input.errDiv);
@@ -108,7 +114,13 @@ export class Form {
 
     cleanErrors() {
         for(const input of this.inputs) {
-            const errDiv = parent.document.getElementById(input.errDiv);
+            let errDiv;
+            if(this.inPopup) {
+                errDiv = parent.document.getElementById(input.errDiv);
+            } else {
+                errDiv = document.getElementById(input.errDiv);
+            }
+            
             const errors = errDiv.getElementsByClassName("error");
             for(const error of errors) {
                 errDiv.removeChild(error);
