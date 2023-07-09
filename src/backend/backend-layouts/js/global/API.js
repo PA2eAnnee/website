@@ -129,12 +129,12 @@ export class API{
                             reject(result.error);
                         }
                     }
-                    addArticleRequest.send(JSON.stringify(toSend));
                 }
                 const token = API.getToken();
                 if(token) {
                     addArticleRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
+                addArticleRequest.send(JSON.stringify(toSend));
             })
         } catch(e) {
             console.log(e);
@@ -204,6 +204,97 @@ export class API{
                 getEventRequest.send();
         });
         } catch(e) {
+            console.log(e);
+        }
+    }
+
+    static getRecipe() {
+        try {
+            return new Promise(resolve => {
+            const getRecipeRequest = new XMLHttpRequest();
+            getRecipeRequest.open("POST", `${API.address}/getrecipe`);
+            getRecipeRequest.onreadystatechange = () => {
+                if(getRecipeRequest.readyState === 4) {
+                    if(getRecipeRequest.status === 200) {
+                        const result = JSON.parse(getRecipeRequest.responseText);
+
+                            if(result.success === true){
+                                const recipes = result.recipes;
+                                resolve(recipes);
+                            }
+
+
+
+                    }
+                }
+            }
+                const token = API.getToken();
+                if(token) {
+                    getRecipeRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getRecipeRequest.send();
+        });
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    static getSites() {
+        try {
+            return new Promise(resolve => {
+            const getSiteRequest = new XMLHttpRequest();
+            getSiteRequest.open("POST", `${API.address}/getsites`);
+            getSiteRequest.onreadystatechange = () => {
+                if(getSiteRequest.readyState === 4) {
+                    if(getSiteRequest.status === 200) {
+                        const result = JSON.parse(getSiteRequest.responseText);
+
+                            if(result.success === true){
+                                const sites = result.sites;
+                                resolve(sites);
+                            }
+
+
+
+                    }
+                }
+            }
+                const token = API.getToken();
+                if(token) {
+                    getSiteRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getSiteRequest.send();
+        });
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    static addEvent(toSend) {
+        try {
+            return new Promise((resolve, reject) => {
+                const addEventRequest = new XMLHttpRequest();
+                addEventRequest.open("POST", `${API.address}/events`);
+                addEventRequest.onreadystatechange = () => {
+                    if(addEventRequest.readyState === 4) {
+                        if(addEventRequest.status === 200) {
+                            const result = JSON.parse(addEventRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    addEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                addEventRequest.send(JSON.stringify(toSend));
+            })
+        } catch (e) {
             console.log(e);
         }
     }
