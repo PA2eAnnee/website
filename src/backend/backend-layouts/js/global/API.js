@@ -12,6 +12,8 @@ export class API{
                         if(userInfos.success == true){
                             const userToken = userInfos.connection.connection.token;
                             document.cookie = `token=${userToken}`;
+                            const userId = userInfos.connection.connection.id;
+                            document.cookie = `id=${userId}`; 
                             window.location = './backend/backend.html';
                         }
                     }
@@ -155,5 +157,54 @@ export class API{
             }
         }
         return decodeURI(cookies.substring(begin + 6, end));
+    }
+
+    static getId() {
+        const cookies = document.cookie;
+        let begin = cookies.indexOf(";","id");
+        if(begin == -1) {
+            begin = cookies.indexOf("id");
+            if(begin != 0) {
+                return null;
+            }
+        } else {
+            begin += 2;
+            var end = cookies.indexOf(";", begin);
+            if (end == -1) {
+                end = cookies.length;
+            }
+        }
+        return decodeURI(cookies.substring(begin + 3, end));
+    }
+
+    static getEvents() {
+        try {
+            return new Promise(resolve => {
+            const getEventRequest = new XMLHttpRequest();
+            getEventRequest.open("POST", `${API.address}/getevents`);
+            getEventRequest.onreadystatechange = () => {
+                if(getEventRequest.readyState === 4) {
+                    if(getEventRequest.status === 200) {
+                        const result = JSON.parse(getEventRequest.responseText);
+
+                            if(result.success === true){
+                                const events = result.events;
+                                resolve(events);
+                            }
+
+
+
+                    }
+                }
+            }
+                const token = API.getToken();
+                if(token) {
+                    getEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getEventRequest.send();
+        });
+        } catch(e) {
+            console.log(e);
+        }
     }
 }

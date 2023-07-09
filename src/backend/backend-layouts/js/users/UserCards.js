@@ -9,8 +9,7 @@ export class UserCards extends Cards {
     }
 
     async getUsers() {
-        const users = await API.getUsers()
-        console.log(users);
+        const users = await API.getUsers();
         users.forEach(user => {
             this.addElem(new UserCard(user.name, user.role));
         });

@@ -28,7 +28,7 @@
                     <p>User</p>
                     <img src="../img/chevron-right-solid.svg">
                 </div>
-                <ul id="user-options">
+                <ul id="user-options" class="list-extended">
                    <li>Profile</li>
                    <li onclick="switchToLayout('list-users')">List</li>
                    <li onclick="switchToLayout('cards-users')">Cards</li>
@@ -37,6 +37,17 @@
                     <img src="../img/box-solid.svg">
                     <p>Stock</p>
                 </div>
+                <div class="card card-extendable" id="events" onclick="toggleShow('events-options', 'events')">
+                    <img src="../img/calendar.svg">
+                    <p>Events</p>
+                    <img src="../img/chevron-right-solid.svg">
+                </div>
+                <ul id="events-options" class="list-extended">
+                    <li onclick="switchToLayout('available-events')">Available events</li>
+                    <li>My events</li>
+                    <li>Create events</li>
+                    <li>Manage events</li>
+                </ul>
             </section>
         </aside>
         <div>
@@ -48,7 +59,7 @@
                     <img src="../img/ic_flag_en.svg" width="30px" height="30px">
                 </div>
             </header>
-            <iframe id="layouts-container" src="./backend-layouts/list-articles.html"></iframe>
+            <iframe id="layouts-container" src="./backend-layouts/available-events.html"></iframe>
         </div>
     </body>
 </html>

@@ -103,11 +103,11 @@ body>div::-webkit-scrollbar{
     color: grey
 }
 
-#user-options{
+.list-extended{
     display: none;
 }
 
-#user-options li{
+.list-extended li{
     padding: 0.7vh 1vw 0.7vh 1vw;
     border-radius: 10px;
     width: 15vw;
