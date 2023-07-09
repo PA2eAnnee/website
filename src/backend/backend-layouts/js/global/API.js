@@ -17,7 +17,6 @@ export class API{
                     }
                 }
         }
-        // loginRequest.setRequestHeader("Accept", "application/json")
         loginRequest.setRequestHeader("Content-type", "application/json");
         loginRequest.send(JSON.stringify({
             email: email, 
@@ -32,7 +31,7 @@ export class API{
         try {
             return new Promise(resolve => {
             const getUsersRequest = new XMLHttpRequest();
-            getUsersRequest.open("GET", `${API.address}/users`);
+            getUsersRequest.open("POST", `${API.address}/getusers`);
             getUsersRequest.onreadystatechange = () => {
                 if(getUsersRequest.readyState === 4) {
                     if(getUsersRequest.status === 200) {
@@ -48,7 +47,12 @@ export class API{
                     }
                 }
             }
-            getUsersRequest.send();
+                const token = API.getToken();
+                console.log(token);
+                if(token) {
+                    getUsersRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getUsersRequest.send();
         });
         } catch(e) {
             console.log(e);
@@ -59,7 +63,7 @@ export class API{
         try {
             return new Promise(resolve => {
                 const getArticlesRequest = new XMLHttpRequest();
-                getArticlesRequest.open("GET", `${API.address}/articles`);
+                getArticlesRequest.open("POST", `${API.address}/getarticles`);
                 getArticlesRequest.onreadystatechange = () => {
                     if(getArticlesRequest.readyState === 4) {
                         if(getArticlesRequest.status === 200) {
@@ -96,6 +100,10 @@ export class API{
                             }
                         }
                     }
+                    const token = API.getToken();
+                    if(token) {
+                        updateArticlesRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                    }
                     updateArticlesRequest.send(JSON.stringify(toSend));
                 })
             } catch(e) {
@@ -104,13 +112,13 @@ export class API{
         } 
     }
 
-    addArticle(toSend) {
+    static addArticle(toSend) {
         try {
             return new Promise((resolve, reject) => {
                 const addArticleRequest = new XMLHttpRequest();
                 addArticleRequest.open("POST", `${API.address}/articles`);
                 addArticleRequest.onreadystatechange = () => {
-                    if(updateArticles.readyState === 4) {
+                    if(addArticleRequest.readyState === 4) {
                         const result = JSON.parse(addArticleRequest.responseText);
 
                         if(result.success === true) {
@@ -121,9 +129,31 @@ export class API{
                     }
                     addArticleRequest.send(JSON.stringify(toSend));
                 }
+                const token = API.getToken();
+                if(token) {
+                    addArticleRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
             })
         } catch(e) {
             console.log(e);
         }
+    }
+
+    static getToken() {
+        const cookies = document.cookie;
+        let begin = cookies.indexOf(";","token");
+        if(begin == -1) {
+            begin = cookies.indexOf("token");
+            if(begin != 0) {
+                return null;
+            }
+        } else {
+            begin += 2;
+            var end = cookies.indexOf(";", begin);
+            if (end == -1) {
+                end = cookies.length;
+            }
+        }
+        return decodeURI(cookies.substring(begin + 6, end));
     }
 }
