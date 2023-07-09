@@ -5,6 +5,8 @@
         <title>General: App | Minimal UI</title>
         <link rel="stylesheet" href="css/left-menu.css">
         <link rel="stylesheet" href="css/template.css">
+        <link rel="stylesheet" href="../../css/popup.css">
+        <link rel="stylesheet" href="../../css/form.css">
     </head>
     <body>
 
@@ -31,6 +33,10 @@
                    <li onclick="switchToLayout('list-users')">List</li>
                    <li onclick="switchToLayout('cards-users')">Cards</li>
                 </ul>
+                <div class="card" onclick="switchToLayout('list-articles')">
+                    <img src="../img/box-solid.svg">
+                    <p>Stock</p>
+                </div>
             </section>
         </aside>
         <div>
@@ -42,7 +48,7 @@
                     <img src="../img/ic_flag_en.svg" width="30px" height="30px">
                 </div>
             </header>
-            <iframe id="layouts-container" src="./backend-layouts/list-users.html"></iframe>
+            <iframe id="layouts-container" src="./backend-layouts/list-articles.html"></iframe>
         </div>
     </body>
 </html>

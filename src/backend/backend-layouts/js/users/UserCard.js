@@ -1,4 +1,4 @@
-import {Card} from './Card.js'
+import {Card} from '../global/Card.js'
 
 export class UserCard extends Card {
     constructor(name, role){

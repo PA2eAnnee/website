@@ -3,12 +3,13 @@
     <head>
         <title>Cook Master</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="header.css">
-        <link rel="stylesheet" href="slider.css">
-        <link rel="stylesheet" href="specs.css">
-        <link rel="stylesheet" href="comments.css">
-        <link rel="stylesheet" href="footer.css">
-        <link rel="stylesheet" href="login.css">
+        <link rel="stylesheet" href="css/header.css">
+        <link rel="stylesheet" href="css/slider.css">
+        <link rel="stylesheet" href="css/specs.css">
+        <link rel="stylesheet" href="css/comments.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/popup.css">
+        <link rel="stylesheet" href="css/form.css">
     </head>
     <body>
         <script type="module" src="login.js"></script>
@@ -28,7 +29,7 @@
                             <li><img class="header-icon" src="img/location-dot-solid.svg" width="30" height="30" alt="position"></li>
                         </ul>
                     </li>
-                    <li class="btn-white" onclick="loginPopupShow()"><a>Connection</a></li>
+                    <li class="btn-white" onclick="login()"><a>Connection</a></li>
                 </ul>
             </nav>
         </header>
@@ -159,20 +160,5 @@
                 </span>
             </section>
         </footer>
-
-        <section id="login">
-            <form id="loginform" method="none">
-                <div>
-                    <div class="bgred">
-                        <img onclick="loginPopupHide()" src="img/close.svg" width="30" heigth="30">
-                    </div>
-                </div>
-                <h2>Connection</h2>
-                <input type="email" name="email" placeholder="Adresse mail" id="loginEmail">
-                <input type="password" name="password" placeholder="Mot de passe" id="loginPassword">
-                <a href="pages/register/register.html">Don't have an account already ?</a>
-                <div onclick="login()" class="submitbutton">Connection</div>
-            </form>
-        </section>
     </body>
 </html>

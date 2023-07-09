@@ -1,6 +1,6 @@
-import { List } from "./List.js";
+import { List } from "../global/List.js";
 import { UserRow } from "./UserRow.js";
-import { API } from "./API.js";
+import { API } from "../global/API.js";
 
 export class UserList extends List {
     constructor() {

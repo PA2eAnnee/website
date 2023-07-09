@@ -1,0 +1,30 @@
+form button {
+    width: 40% !important;
+    height: 12% !important;
+    border-radius: 500px;
+    padding: 0 !important;
+    border: none;
+    color: white;
+    background-color: #001D48;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+form input{
+    width: 60%;
+    height: 12%;
+    border-radius: 5px;
+    border: solid 2px #001D48;
+    text-align: center;
+}

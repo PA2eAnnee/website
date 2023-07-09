@@ -1,4 +1,4 @@
-import { ListRow } from "./ListRow.js";
+import { ListRow } from "../global/ListRow.js";
 
 export class UserRow extends ListRow {
     constructor(id) {
