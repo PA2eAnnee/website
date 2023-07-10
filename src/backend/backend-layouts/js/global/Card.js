@@ -7,7 +7,9 @@ export class Card {
     }
 
     generate(otherRootClass, otherContentClass) {
-        
+        if(this.id) {
+            this.card.id = this.id;
+        }
         this.card.classList.add("card");
         if(otherRootClass) {
             this.card.classList.add(otherRootClass);
@@ -24,6 +26,10 @@ export class Card {
                 for(const CssClass of attribute.CssClass) {
                     elem.classList.add(CssClass);
                 }
+
+                if(attribute.tag === "button") {
+                    elem.onclick = () => attribute.onclick();
+                }
                 cardContent.appendChild(elem);
             }
             
@@ -37,5 +43,9 @@ export class Card {
 
     getCard() {
         return this.card;
+    }
+
+    setId(id) {
+        this.id = id;
     }
 }

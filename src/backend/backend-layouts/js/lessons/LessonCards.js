@@ -10,7 +10,6 @@ export class LessonCards extends Cards {
 
     async getEvents() {
         const lessons = await API.getLessons();
-        console.log(lessons);
         lessons.forEach(lesson => {
             this.addElem(new LessonCard(lesson.name, lesson.description));
         });
