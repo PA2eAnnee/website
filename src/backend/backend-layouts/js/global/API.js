@@ -14,6 +14,8 @@ export class API{
                             document.cookie = `token=${userToken}`;
                             const userId = userInfos.connection.connection.id;
                             document.cookie = `id=${userId}`; 
+                            const userRole = userInfos.connection.connection.role;
+                            document.cookie = `role=${userRole}`;
                             window.location = './backend/backend.html';
                         }
                     }
@@ -27,6 +29,53 @@ export class API{
     } catch(e) {
         console.log(e);
     }
+    }
+
+    static getToken() {
+        const cookies = document.cookie;
+        const tokenKey = "token=";
+        const cookieStart = cookies.indexOf(tokenKey);
+        let token = null;
+        if(cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            token = decodeURIComponent(cookies.substring(cookieStart + tokenKey.length, cookieEnd));
+        }
+        return token;
+    }
+
+    static getId() {
+        const cookies = document.cookie;
+        const idKey = "id=";
+        const cookieStart = cookies.indexOf(idKey);
+        let id = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            id = decodeURIComponent(cookies.substring(cookieStart + idKey.length, cookieEnd));
+        }
+        return id;
+    }
+
+    static getRole() {
+        const cookies = document.cookie;
+        const roleKey = "role=";
+        const cookieStart = cookies.indexOf(roleKey);
+        let role = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            role = decodeURIComponent(cookies.substring(cookieStart + roleKey.length, cookieEnd));
+        }
+        return role;
     }
 
     static getUsers() {
@@ -43,9 +92,6 @@ export class API{
                                 const users = result.users;
                                 resolve(users);
                             }
-                        
-                        
-                        
                     }
                 }
             }
@@ -139,42 +185,6 @@ export class API{
         } catch(e) {
             console.log(e);
         }
-    }
-
-    static getToken() {
-        const cookies = document.cookie;
-        let begin = cookies.indexOf(";","token");
-        if(begin == -1) {
-            begin = cookies.indexOf("token");
-            if(begin != 0) {
-                return null;
-            }
-        } else {
-            begin += 2;
-            var end = cookies.indexOf(";", begin);
-            if (end == -1) {
-                end = cookies.length;
-            }
-        }
-        return decodeURI(cookies.substring(begin + 6, end));
-    }
-
-    static getId() {
-        const cookies = document.cookie;
-        let begin = cookies.indexOf(";","id");
-        if(begin == -1) {
-            begin = cookies.indexOf("id");
-            if(begin != 0) {
-                return null;
-            }
-        } else {
-            begin += 2;
-            var end = cookies.indexOf(";", begin);
-            if (end == -1) {
-                end = cookies.length;
-            }
-        }
-        return decodeURI(cookies.substring(begin + 3, end));
     }
 
     static getEvents() {
@@ -326,6 +336,90 @@ export class API{
                 getLessonRequest.send();
         });
         } catch(e) {
+            console.log(e);
+        }
+    }
+
+    static getMyEvents() {
+        try {
+            return new Promise(resolve => {
+            const getMyEventRequest = new XMLHttpRequest();
+            getMyEventRequest.open("POST", `${API.address}/getmygoestos`);
+            getMyEventRequest.onreadystatechange = () => {
+                if(getMyEventRequest.readyState === 4) {
+                    if(getMyEventRequest.status === 200) {
+                        const result = JSON.parse(getMyEventRequest.responseText);
+                            if(result.success === true){
+                                const events = result.goestos;
+                                resolve(events);
+                            }
+
+                    }
+                }
+            }
+                const token = API.getToken();
+                if(token) {
+                    getMyEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getMyEventRequest.send(JSON.stringify({id_user: API.getId()}));
+        });
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    static joinEvent(event_id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const joinEventRequest = new XMLHttpRequest();
+                joinEventRequest.open("POST", `${API.address}/goestos`);
+                joinEventRequest.onreadystatechange = () => {
+                    if(joinEventRequest.readyState === 4) {
+                        if(joinEventRequest.status === 200) {
+                            const result = JSON.parse(joinEventRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    joinEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                joinEventRequest.send(JSON.stringify({id_user: API.getId(), id_event: `${event_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static leaveEvent(event_id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const leaveEventRequest = new XMLHttpRequest();
+                leaveEventRequest.open("POST", `${API.address}/deletegoestos`);
+                leaveEventRequest.onreadystatechange = () => {
+                    if(leaveEventRequest.readyState === 4) {
+                        if(leaveEventRequest.status === 200) {
+                            const result = JSON.parse(leaveEventRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    leaveEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                leaveEventRequest.send(JSON.stringify({id_user: API.getId(), id_event: `${event_id}`}));
+            });
+        } catch (e) {
             console.log(e);
         }
     }
