@@ -78,7 +78,6 @@ export class API{
         return role;
     }
 
-
     static getBasket() {
         const cookies = document.cookie;
         const basketKey = "basket=";
