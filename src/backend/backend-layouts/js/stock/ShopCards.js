@@ -11,7 +11,7 @@ export class ShopCards extends Cards {
     async getArticles() {
         const articles = await API.getArticles();
         articles.forEach(article => {
-            this.addElem(new ShopCard(article.description, article.stock, article.price, article.id));
+            this.addElem(new ShopCard(article.name, article.description, article.stock, article.price, article.id));
         });
         this.display();
     }

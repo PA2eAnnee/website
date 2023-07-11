@@ -13,6 +13,7 @@ export class Popup {
         crossImg.src = '../../../img/close.svg';
         crossImg.width="30";
         crossImg.height="30";
+        console.log(crossImg);
         crossImg.onclick = () => this.destroy();
         closeDiv.appendChild(crossImg);
         popupHeader.appendChild(closeDiv);
