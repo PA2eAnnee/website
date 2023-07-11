@@ -24,7 +24,8 @@ export class API{
         loginRequest.setRequestHeader("Content-type", "application/json");
         loginRequest.send(JSON.stringify({
             email: email, 
-            password: password
+            password: password,
+            origin: "website"
         }));
     } catch(e) {
         console.log(e);
