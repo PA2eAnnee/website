@@ -1,0 +1,14 @@
+.qtt-icon {
+    width: 30px !important;
+    height: 30px !important;
+    filter: invert(0%) sepia(2%) saturate(7493%) hue-rotate(1deg) brightness(110%) contrast(94%) !important;
+    border: solid black 2px !important;
+    border-radius: 50px !important;
+}
+
+.qtt-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 30%;
+}

@@ -1,5 +1,6 @@
 import {Popup} from "../global/Popup.js";
 import {API} from "../global/API.js";
+import { QuantityPicker } from "./QuantityPicker.js";
 
 export class BuyArticlePopup extends Popup {
     name;
@@ -29,39 +30,9 @@ export class BuyArticlePopup extends Popup {
         centering.style.justifyContent = "space-around";
         centering.style.alignItems = "center";
 
-        const nb = document.createElement("p");
-        nb.innerText = "1";
-        nb.id = "nb";
+        const quantityPicker = new QuantityPicker(1, this.stock, 1);
 
-        const plus = document.createElement("img");
-        plus.src = "../../img/plus.svg";
-        plus.style.width = "30px";
-        plus.style.height = "30px";
-        plus.style.filter = "invert(0%) sepia(2%) saturate(7493%) hue-rotate(1deg) brightness(110%) contrast(94%)";
-        plus.style.border = "solid black 2px";
-        plus.style.borderRadius = "50px";
-        plus.onclick = () => {
-            if(nb.innerText < this.stock) {
-                nb.innerText = parseInt(nb.innerText) + 1;
-            }
-        }
-
-        const minus = document.createElement("img");
-        minus.src = "../../img/minus.svg";
-        minus.style.width = "30px";
-        minus.style.height = "30px";
-        minus.style.filter = "invert(0%) sepia(2%) saturate(7493%) hue-rotate(1deg) brightness(110%) contrast(94%)";
-        minus.style.border = "solid black 2px";
-        minus.style.borderRadius = "50px";
-        minus.onclick = () => {
-            if(nb.innerText > 1) {
-                nb.innerText = parseInt(nb.innerText) - 1;
-            }
-        }
-
-        centering.appendChild(minus);
-        centering.appendChild(nb);
-        centering.appendChild(plus);
+        centering.appendChild(quantityPicker.getPicker());
 
         content.appendChild(centering);
 
@@ -72,9 +43,6 @@ export class BuyArticlePopup extends Popup {
         }
         content.appendChild(buyButton);
         super.generate(content);
-
-        
-
     }
 
     addtoBasket(nb) {
