@@ -78,6 +78,7 @@ export class API{
         return role;
     }
 
+
     static getBasket() {
         const cookies = document.cookie;
         const basketKey = "basket=";
@@ -93,37 +94,40 @@ export class API{
         }
         return basket;
     }
-
-    
-
-    static getUsers() {
+  
+    static getUsers(toSend) {
         try {
             return new Promise(resolve => {
-            const getUsersRequest = new XMLHttpRequest();
-            getUsersRequest.open("POST", `${API.address}/getusers`);
-            getUsersRequest.onreadystatechange = () => {
-                if(getUsersRequest.readyState === 4) {
-                    if(getUsersRequest.status === 200) {
-                        const result = JSON.parse(getUsersRequest.responseText);
-                        
-                            if(result.success === true){
+                const getUsersRequest = new XMLHttpRequest();
+                getUsersRequest.open("POST", `${API.address}/getusers`);
+                getUsersRequest.onreadystatechange = () => {
+                    if (getUsersRequest.readyState === 4) {
+                        if (getUsersRequest.status === 200) {
+                            const result = JSON.parse(getUsersRequest.responseText);
+    
+                            if (result.success === true) {
                                 const users = result.users;
                                 resolve(users);
                             }
+                        }
                     }
                 }
-            }
+    
                 const token = API.getToken();
                 console.log(token);
-                if(token) {
+                if (token) {
                     getUsersRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
-                getUsersRequest.send();
-        });
-        } catch(e) {
+                    const body = JSON.stringify(toSend);
+                    console.log(body);
+                    getUsersRequest.setRequestHeader("Content-Type", "application/json");
+                    getUsersRequest.send(body);
+            });
+        } catch (e) {
             console.log(e);
         }
     }
+    
 
     static getArticles() {
         try {
