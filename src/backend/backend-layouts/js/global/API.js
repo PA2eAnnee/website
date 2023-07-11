@@ -24,7 +24,8 @@ export class API{
         loginRequest.setRequestHeader("Content-type", "application/json");
         loginRequest.send(JSON.stringify({
             email: email, 
-            password: password
+            password: password,
+            origin: "website"
         }));
     } catch(e) {
         console.log(e);
@@ -78,6 +79,22 @@ export class API{
         return role;
     }
 
+    static getBasket() {
+        const cookies = document.cookie;
+        const basketKey = "basket=";
+        const cookieStart = cookies.indexOf(basketKey);
+        let basket = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            basket = decodeURIComponent(cookies.substring(cookieStart + basketKey.length, cookieEnd));
+        }
+        return basket;
+    }
+  
     static getUsers(toSend) {
         try {
             return new Promise(resolve => {
@@ -423,6 +440,34 @@ export class API{
                     leaveEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
                 leaveEventRequest.send(JSON.stringify({id_user: API.getId(), id_event: `${event_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static chefJoinEvent(id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const chefJoinRequest = new XMLHttpRequest();
+                chefJoinRequest.open("PATCH", `${API.address}/events/${id}`);
+                chefJoinRequest.onreadystatechange = () => {
+                    if(chefJoinRequest.readyState === 4) {
+                        if(chefJoinRequest.status === 200) {
+                            const result = JSON.parse(chefJoinRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    chefJoinRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                chefJoinRequest.send(JSON.stringify({organizer: API.getId(), status: "PUBLISH"}));
             });
         } catch (e) {
             console.log(e);

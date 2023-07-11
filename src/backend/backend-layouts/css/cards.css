@@ -1,5 +1,5 @@
 .card {
-    width: 30%;
+    width: calc(33.33% - 2.6%);
     margin: 1.3%;
     display: flex;
     flex-direction: column;
@@ -7,17 +7,42 @@
     border-radius: 30px;
     overflow: hidden;
     background-image: url('../../../img/bg-user.jpg');
-    height: 50%;
+    height: 400px; /* Hauteur fixe pour toutes les cartes */
     border: solid 2px rgb(244, 246, 248);
-}
-
-.card .card-content{
+  }
+  
+  .card .card-content {
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 50%;
+    height: 50%; /* Réduire la hauteur du contenu pour l'adapter à la carte */
     width: 100%;
-    line-height: 50%;
     padding: 2%;
-}
+  }
+  
+  .card h3 {
+    font-size: 18px; /* Taille de police réduite pour les titres */
+    margin-bottom: 10px; /* Espacement entre le titre et le prix */
+  }
+  
+  .card h5 {
+    margin-bottom: 10px; /* Espacement entre le prix et les boutons */
+  }
+  
+  .card .btns {
+    display: flex;
+    justify-content: space-around; /* Espacement égal entre les boutons */
+    width: 100%;
+  }
+
+  .card .btns button {
+    background-color: #1a0d8e;
+    color: white;
+    width: 40%;
+    border: none;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    border-radius: 5px;
+  }
+  
