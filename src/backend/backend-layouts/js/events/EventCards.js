@@ -4,36 +4,33 @@ import {EventCard} from "./EventCard.js";
 
 export class EventCards extends Cards {
     mine;
-    constructor(container, mine) {
+    constructor(container, profile, past) {
         super(container);
-        if(mine) {
-            this.mine = true;
-        }
+        this.profile = profile;
+        this.past = past;
         this.getEvents();
     }
 
     async getEvents() {
         let events;
-        if(this.mine) {
+        if(this.profile) {
             events = await API.getMyEvents();
         } else {
             events = await API.getEvents();
         }
 
-        const attendings = await API.getMyEvents();
-        
         const toShowEvents = [];
-        const role = API.getRole();
-        for(const event of events) {
-            if(event.status === "PUBLISH" && role === "USER" || role === "WORKER" || role === "ADMIN") {
-                toShowEvents.push(event);
+        events.forEach(event => {
+            if(this.profile && attendings.includes(event) || !this.profile && API.getRole() == "COOKER" && event.status == "WAITING" || !this.profile && API.getRole() == "USER" && event.status == "PUBLISH"){
+                if(this.past && new Date(event.start_date) < Date.now()) {
+                    toShowEvents.push(event);
+                } else if(!this.past && new Date(event.start_date) >= Date.now()){
+                    toShowEvents.push(event);
+                }
             }
-            if(event.status === "WAITING" && role === "COOKER" || role === "WORKER" || role === "ADMIN") {
-                toShowEvents.push(event);
-            }
-        }
+        });
         toShowEvents.forEach(event => {
-            this.addElem(new EventCard(event.description, event.type, event.start_date, event.end_date, event.id, attendings, this));
+            this.addElem(new EventCard(event.description, event.type, event.start_date, event.end_date, event.id, this));
         });
         this.display();
     }

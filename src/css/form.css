@@ -28,3 +28,8 @@ form input, form select{
     border: solid 2px #001D48;
     text-align: center;
 }
+
+form input[type="radio"] {
+    width: 15px;
+    height: 15px;
+}

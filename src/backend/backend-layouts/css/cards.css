@@ -20,6 +20,14 @@
     width: 100%;
     padding: 2%;
   }
+
+  .card-content {
+    overflow-y: scroll;
+  }
+
+  .card-content::-webkit-scrollbar {
+    display: none;
+  }
   
   .card h3 {
     font-size: 18px; /* Taille de police réduite pour les titres */

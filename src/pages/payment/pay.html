@@ -75,11 +75,27 @@
                       }
                     })
                   }
-                  })
-                  document.cookie = "basket={};path/";
-                  document.cookie = "total_order=0;path/";
-                  document.cookie = "type_order=null;path/";
+                });
+
+                API.addOrder({
+                  total_price: API.getTotalBasket(),
+                  id_user: API.getId()
+                }).then((result) => {
+                  for(const article of Object.keys(basket)) {
+                    API.addContains({
+                      id_article: parseInt(article),
+                      id_order: result.orderid,
+                      quantity: basket[article]
+                    });
+                  }
+                });
+                  document.cookie = "basket={};path=/";
+                  document.cookie = "total_order=0;path=/";
+                  document.cookie = "type_order=null;path=/";
                   break;
+                  case "event":
+                    API.joinEvent(API.getEventId());
+                    break;
                   default:
                     break;  
               }
