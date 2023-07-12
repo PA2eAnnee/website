@@ -1,6 +1,6 @@
 import { API } from "../../backend/backend-layouts/js/global/API.js";
 
-const generatePDF = async () => {
+export const generatePDF = async () => {
   const container = document.createElement('div');
   container.classList.add('container');
 
