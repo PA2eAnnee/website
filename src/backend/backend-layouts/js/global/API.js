@@ -13,10 +13,13 @@ export class API{
                             const userToken = userInfos.connection.connection.token;
                             document.cookie = `token=${userToken}`;
                             const userId = userInfos.connection.connection.id;
-                            document.cookie = `id=${userId}`; 
+                            document.cookie = `user_id=${userId}`; 
                             const userRole = userInfos.connection.connection.role;
                             document.cookie = `role=${userRole}`;
                             window.location = './backend/backend.html';
+                            if(!API.getBasket()) {
+                                document.cookie = "basket={}"
+                            }
                         }
                     }
                 }
@@ -49,7 +52,7 @@ export class API{
 
     static getId() {
         const cookies = document.cookie;
-        const idKey = "id=";
+        const idKey = "user_id=";
         const cookieStart = cookies.indexOf(idKey);
         let id = null;
     
@@ -77,6 +80,70 @@ export class API{
             role = decodeURIComponent(cookies.substring(cookieStart + roleKey.length, cookieEnd));
         }
         return role;
+    }
+
+    static getBasket() {
+        const cookies = document.cookie;
+        const basketKey = "basket=";
+        const cookieStart = cookies.indexOf(basketKey);
+        let basket = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            basket = decodeURIComponent(cookies.substring(cookieStart + basketKey.length, cookieEnd));
+        }
+        return basket;
+    }
+
+    static getTotalBasket() {
+        const cookies = document.cookie;
+        const totalKey = "total_order=";
+        const cookieStart = cookies.indexOf(totalKey);
+        let total = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            total = decodeURIComponent(cookies.substring(cookieStart + totalKey.length, cookieEnd));
+        }
+        return total;
+    }
+
+    static getOrderType() {
+        const cookies = document.cookie;
+        const typeKey = "type_order=";
+        const cookieStart = cookies.indexOf(typeKey);
+        let type = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            type = decodeURIComponent(cookies.substring(cookieStart + typeKey.length, cookieEnd));
+        }
+        return type;
+    }
+
+    static getEventId() {
+        const cookies = document.cookie;
+        const eventKey = "event_id=";
+        const cookieStart = cookies.indexOf(eventKey);
+        let event = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            event = decodeURIComponent(cookies.substring(cookieStart + eventKey.length, cookieEnd));
+        }
+        return event;
     }
 
     static getUsers() {
@@ -363,7 +430,7 @@ export class API{
         }
     }
 
-    static getEvents() {
+    static getEvents(toSend) {
         try {
             return new Promise(resolve => {
             const getEventRequest = new XMLHttpRequest();
@@ -387,7 +454,7 @@ export class API{
                 if(token) {
                     getEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
-                getEventRequest.send();
+                getEventRequest.send(JSON.stringify(toSend));
         });
         } catch(e) {
             console.log(e);
@@ -616,7 +683,7 @@ export class API{
                             const result = JSON.parse(addCourseRequest.responseText);
 
                             if(result.success === true) {
-                                resolve(true);
+                                resolve(result.price);
                             } else {
                                 reject(result.error);
                             }
@@ -835,4 +902,65 @@ export class API{
             console.log(e);
         }
     }
+
+    static addOrder(toSend) {
+        try {
+            return new Promise((resolve, reject) => {
+                const addOrderRequest = new XMLHttpRequest();
+                addOrderRequest.open("POST", `${API.address}/orders`);
+                addOrderRequest.onreadystatechange = () => {
+                    if(addOrderRequest.readyState === 4) {
+                        if(addOrderRequest.status === 200) {
+                            const result = JSON.parse(addOrderRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(result);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    addOrderRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                addOrderRequest.send(JSON.stringify(toSend));
+            })
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    static addContains(toSend) {
+        try {
+            return new Promise((resolve, reject) => {
+                const addContainsRequest = new XMLHttpRequest();
+                addContainsRequest.open("POST", `${API.address}/contains`);
+                addContainsRequest.onreadystatechange = () => {
+                    if(addContainsRequest.readyState === 4) {
+                        if(addContainsRequest.status === 200) {
+                            const result = JSON.parse(addContainsRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    addContainsRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                addContainsRequest.send(JSON.stringify(toSend));
+            })
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    
 }
