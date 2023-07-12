@@ -1,5 +1,3 @@
-import { AddArticlePopup } from "../stock/AddArticlePopup.js";
-
 export class List {
     elems = [];
     container;
@@ -27,7 +25,7 @@ export class List {
         const addButton = document.createElement('button');
         addButton.innerText = 'Add';
         addButton.onclick = () => {
-            const addPopup = new AddArticlePopup(this);
+            const addPopup = new this.addPopupType;
             addPopup.generate();
         };
 
@@ -116,5 +114,9 @@ export class List {
 
     setAddPopupType(addPopupType) {
         this.addPopupType = addPopupType;
+    }
+
+    removeItemFromList(id) {
+        this.container.getElementsByTagName("tbody")[0].removeChild(document.getElementById(`${id}`));
     }
 }

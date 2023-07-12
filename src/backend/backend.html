@@ -33,10 +33,15 @@
                    <li onclick="switchToLayout('list-users')">List</li>
                    <li onclick="switchToLayout('cards-users')">Cards</li>
                 </ul>
-                <div class="card" onclick="switchToLayout('list-articles')">
+                <div class="card card-extendable" onclick="toggleShow('articles-options', 'articles')">
                     <img src="../img/box-solid.svg">
                     <p>Stock</p>
+                    <img src="../img/chevron-right-solid.svg">
                 </div>
+                <ul id="articles-options" class="list-extended">
+                    <li onclick="switchToLayout('create-article')">Create article</li>
+                    <li onclick="switchToLayout('list-articles')">Manage articles</li>
+                </ul>
                 <div class="card card-extendable" id="events" onclick="toggleShow('events-options', 'events')">
                     <img src="../img/calendar.svg">
                     <p>Events</p>
@@ -46,12 +51,62 @@
                     <li onclick="switchToLayout('available-events')">Available events</li>
                     <li onclick="switchToLayout('my-events')">My events</li>
                     <li onclick="switchToLayout('create-event')">Create events</li>
-                    <li>Manage events</li>
+                    <li onclick="switchToLayout('list-events')">Manage events</li>
                 </ul>
-                <div class="card" onclick="switchToLayout('available-lessons')">
+                <div class="card card-extendable" id="lessons" onclick="toggleShow('lessons-options', 'lessons')">
                     <img src="../img/school.svg">
                     <p>Lessons</p>
+                    <img src="../img/chevron-right-solid.svg">
                 </div>
+                <ul id="lessons-options" class="list-extended">
+                    <li onclick="switchToLayout('available-lessons')">Available lessons</li>
+                    <li onclick="switchToLayout('create-lesson')">Create lesson</li>
+                    <li onclick="switchToLayout('list-lessons')">Manage lessons</li>
+                </ul>
+                <div class="card card-extendable" id="sites" onclick="toggleShow('sites-options', 'sites')">
+                    <img src="../img/location-dot-solid.svg">
+                    <p>Sites</p>
+                    <img src="../img/chevron-right-solid.svg">
+                </div>
+                <ul id="sites-options" class="list-extended">
+                    <li onclick="switchToLayout('create-site')">Create site</li>
+                    <li onclick="switchToLayout('list-sites')">Manage sites</li>
+                </ul>
+                <div class="card card-extendable" id="recipes" onclick="toggleShow('recipes-options', 'recipes')">
+                    <img src="../img/cakes.svg">
+                    <p>Recipes</p>
+                    <img src="../img/chevron-right-solid.svg">
+                </div>
+                <ul id="recipes-options" class="list-extended">
+                    <li onclick="switchToLayout('create-recipe')">Create recipe</li>
+                    <li onclick="switchToLayout('list-recipes')">Manage recipes</li>
+                </ul>
+                <div class="card card-extendable" id="tickets" onclick="toggleShow('tickets-options', 'tickets')">
+                    <img src="../img/ticket.svg">
+                    <p>Tickets</p>
+                    <img src="../img/chevron-right-solid.svg">
+                </div>
+                <ul id="tickets-options" class="list-extended">
+                    <li onclick="switchToLayout('create-ticket')">Create ticket</li>
+                    <li onclick="switchToLayout('list-tickets')">Manage tickets</li>
+                </ul>
+                <div class="card card-extendable" id="courses" onclick="toggleShow('courses-options', 'courses')">
+                    <img src="../img/book-open.svg">
+                    <p>Courses</p>
+                    <img src="../img/chevron-right-solid.svg">
+                </div>
+                <ul id="courses-options" class="list-extended">
+                    <li onclick="switchToLayout('create-course')">Create course</li>
+                    <li onclick="switchToLayout('list-courses')">Manage courses</li>
+                </ul>
+                <div class="card card-extendable" id="formations" onclick="toggleShow('formations-options', 'formations')">
+                    <img src="../img/graduation-cap.svg">
+                    <p>Formations</p>
+                    <img src="../img/chevron-right-solid.svg">
+                </div>
+                <ul id="formations-options" class="list-extended">
+                    <li onclick="switchToLayout('list-formations')">Manage formations</li>
+                </ul>
             </section>
         </aside>
         <div>
@@ -63,7 +118,7 @@
                     <img src="../img/ic_flag_en.svg" width="30px" height="30px">
                 </div>
             </header>
-            <iframe id="layouts-container" src="./backend-layouts/available-lessons.html"></iframe>
+            <iframe id="layouts-container" src="./backend-layouts/create-article.html"></iframe>
         </div>
     </body>
 </html>

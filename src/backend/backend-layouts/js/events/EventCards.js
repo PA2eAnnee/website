@@ -28,7 +28,7 @@ export class EventCards extends Cards {
             if(event.status === "PUBLISH" && role === "USER" || role === "WORKER" || role === "ADMIN") {
                 toShowEvents.push(event);
             }
-            if(event.status === "WAITING" && role === "COOKER" || event.organizer == API.getId() || role === "WORKER" || role === "ADMIN") {
+            if(event.status === "WAITING" && role === "COOKER" || role === "WORKER" || role === "ADMIN") {
                 toShowEvents.push(event);
             }
         }

@@ -21,28 +21,21 @@ export class EventCard extends Card {
         const endMinutes = endDate.getMinutes();
         this.attributes.push({tag: "h5", value: `${day}/${month}/${year}       ${startHour}:${startMinutes} | ${endHours}:${endMinutes}`, CssClass: ""});
         let attended = false;
-        const role = API.getRole();
         for(const attending of attendings) {
             if(attending.id === this.id) {
                 this.attributes.push({tag: "button", value: "leave", CssClass: "", onclick: () => {
-                if(role === "USER"){
                     API.leaveEvent(this.id).then(() => {
                         list.getElementById(id).getElementsbyTagName("button")[0].innerText = "join";
                     })
-                } else if(role === "COOKER") {
-                    API.chefJoinEvent(this.id)
-                }
                 }});
                 attended = true;
             }
         }
         if(!attended) {
             this.attributes.push({tag: "button", value: "join", CssClass: "", onclick: () => {
-                
-                    API.joinEvent(this.id).then(() => {
-                        list.getElementById(id).getElementsbyTagName("button")[0].innerText = "leave";
-                    })
-                
+                API.joinEvent(this.id).then(() => {
+                    list.getElementById(id).getElementsbyTagName("button")[0].innerText = "leave";
+                })
             }});
         }
         this.generate("card-event", "event-profile");
