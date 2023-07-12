@@ -1,28 +1,44 @@
 import {CookMasterDate} from './CookMasterDate.js';
+import {API} from './API.js';
 
 export class Calendar{
     days = [];
     table;
+    courses;
+    events;
     monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     constructor(day, table){
-        this.days = this.getDaysOfMonth(day);
-        this.table = table;
+        this.getEvents(day, table);
     }
 
-    getDaysOfMonth(day){
-        const year = day.getFullYear();
-        const month = day.getMonth();
-        let date = new CookMasterDate(year, month, 1);
-        let days = [];
+    async getEvents(day, table) {
+        this.courses = await API.getCourses({user_id: API.getId()});
+        this.events = await API.getMyEvents({id_user: API.getId()});
+        this.days = await this.getDaysOfMonth(day);
+        this.table = table;
+        this.display();
+    }
 
-        while(date.getMonth() === month){
+    async getDaysOfMonth(day) {
+        return new Promise((resolve) => {
+          const year = day.getFullYear();
+          const month = day.getMonth();
+          let date = new CookMasterDate(year, month, 1);
+          let days = [];
+      
+          while (date.getMonth() === month) {
             days.push(new CookMasterDate(date));
             date.setDate(date.getDate() + 1);
-        }
-
-        return days;
-    }
+          }
+      
+          days.forEach((day) => {
+            day.setCourse(this.courses);
+            day.setEvent(this.events);
+          });
+          resolve(days);
+        });
+      }
 
     display(){
         this.table.innerHTML = "";
@@ -37,8 +53,54 @@ export class Calendar{
                 tbody.appendChild(currentRow);
                 currentRow = document.createElement("tr");
             }
+            const date = day.getDate().toString();
             let cell = document.createElement("td");
-            cell.innerHTML = day.getDate().toString();
+            if(day.getEvent()) {
+                const eventMarker = document.createElement("div");
+                eventMarker.innerText = date;
+                eventMarker.style.color = "white";
+                eventMarker.style.borderRadius = "50px";
+                eventMarker.style.background = "red";
+                eventMarker.style.width = "30px";
+                eventMarker.style.height = "30px";
+                eventMarker.style.margin = "auto";
+                eventMarker.style.display = "flex";
+                eventMarker.style.justifyContent = "center";
+                eventMarker.style.alignItems = "center";
+                eventMarker.title = day.getEvent().description;
+
+                cell.appendChild(eventMarker);
+
+            }
+
+            if(day.getCourse()) {
+                if(cell.getElementsByTagName("div").length > 0){
+                    cell.getElementsByTagName("div")[0].style.background = "purple";
+                } else {
+                    const eventMarker = document.createElement("div");
+                    eventMarker.innerText = date;
+                    eventMarker.style.color = "white";
+                    eventMarker.style.borderRadius = "50px";
+                    eventMarker.style.background = "green";
+                    eventMarker.style.width = "30px";
+                    eventMarker.style.height = "30px";
+                    eventMarker.style.margin = "auto";
+                    eventMarker.style.display = "flex";
+                    eventMarker.style.justifyContent = "center";
+                    eventMarker.style.alignItems = "center";
+                    eventMarker.title = day.getCourse().name;
+
+                    cell.appendChild(eventMarker);
+                }
+            }
+
+            if(day.getCourse() && day.getEvent()) {
+                cell.style.background = "purple";
+            }
+            if(cell.innerHTML == "") {
+                cell.innerHTML = date;
+            }
+            
             currentRow.appendChild(cell);
         }
         tbody.appendChild(currentRow);
@@ -59,7 +121,6 @@ export class Calendar{
         day.setDate(new CookMasterDate(day.getDate() + 1));
         this.days = "";
         this.days = this.getDaysOfMonth(day);
-        console.log(this.days);
     }
     previousMonth(){
         let day = this.days.shift();

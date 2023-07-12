@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/layouts.css">
+        <link rel="stylesheet" href="css/formation.css">
+        <link rel="stylesheet" href="../../css/popup.css">
+    </head>
+    <body>
+        <script type="module" >
+            import {FormaValidationPopup} from "./js/formations/FormaValidationPopup.js";
+
+            const valid1 = document.getElementById("valid-1");
+            const valid2 = document.getElementById("valid-2");
+            const valid3 = document.getElementById("valid-3");
+
+            valid1.onclick = () => {
+                const validPopup1 = new FormaValidationPopup(1);
+            }
+            valid2.onclick = () => {
+                const validPopup2 = new FormaValidationPopup(2);
+            }
+            valid3.onclick = () => {
+                const validPopup3 = new FormaValidationPopup(3);
+            }
+        </script>
+        <header>
+            <h3>Formations</h3>
+            <ul class="layout-path">
+                <li>User</li>
+                <li><img src="../../img/circle-solid.svg" width="7px" height="7px"></li>
+                <li>Formations</li>
+                <li><img src="../../img/circle-solid.svg" width="7px" height="7px"></li>
+                <li>Obtain</li>
+            </ul>
+        </header>
+        <main>
+            <h1>Nos Formations</h1>
+
+            <div class="forma-card">
+                <h2>Formation starter</h2>
+                <ul>
+                    <li><h3>Avoir validé 5 Leçons en ligne</h3></li>
+                    <li><h3>Avoir fait 5 Cours en ligne ou à domicile</h3></li>
+                    <li><h3>Avoir pris part à 5 Events organisés par CookMaster</h3></li>
+                    <button id="valid-1">Obtenir</button>
+                </ul>
+            </div>
+            
+            <div class="forma-card">
+                <h2>Formation Beginner</h2>
+                <ul>
+                    <li><h3>Avoir validé 10 Leçons en ligne</h3></li>
+                    <li><h3>Avoir fait 10 Cours en ligne ou à domicile</h3></li>
+                    <li><h3>Avoir pris part à 10 Events organisés par CookMaster</h3></li>
+                    <button id="valid-2">Obtenir</button>
+                </ul>
+            </div>
+
+            <div class="forma-card">
+                <h2>Formation Advanced</h2>
+                <ul>
+                    <li><h3>Avoir validé 15 Leçons en ligne</h3></li>
+                    <li><h3>Avoir fait 15 Cours en ligne ou à domicile</h3></li>
+                    <li><h3>Avoir pris part à 15 Events organisés par CookMaster</h3></li>
+                    <button id="valid-3">Obtenir</button>
+                </ul>
+            </div>
+
+        </main>
+
+        </body>
+</html>
