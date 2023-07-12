@@ -6,9 +6,13 @@
         <link rel="stylesheet" href="css/calendar.css">
     </head>
     <body>
-        <script type="module" src="js/calendargen.js">
-
-        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+        <script type = "module" src="../../pages/pdf/pdf.js"></script>
+            <script type = "module">
+                import{generatePDF} from "../../pages/pdf/pdf.js";
+                // Appel de la fonction generatePDF() lors du clic sur le bouton
+                document.getElementById('generate').onclick = () => generatePDF();
+            </script>
         <header>
             <h3>Profile</h3>
             <ul class="layout-path">
@@ -35,7 +39,7 @@
                         <li>Schedule</li>
                         <li>My events</li>
                         <li>My courses</li>
-                        <li>Gallery</li>
+                        <li id="generate">Export my profile to pdf</li>
                     </ul>
                 </nav>
             </section>

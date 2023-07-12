@@ -534,7 +534,7 @@ export class API{
         }
     }
 
-    static getCourses() {
+    static getCourses(toSend) {
         try {
             return new Promise(resolve => {
             const getCourseRequest = new XMLHttpRequest();
@@ -554,7 +554,7 @@ export class API{
                 if(token) {
                     getCourseRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
-                getCourseRequest.send();
+                getCourseRequest.send(JSON.stringify(toSend));
         });
         } catch(e) {
             console.log(e);
@@ -985,5 +985,59 @@ export class API{
 
     }
 
+    static getParticipateLessons(toSend) {
+        try {
+            return new Promise(resolve => {
+                const getPLRequest = new XMLHttpRequest();
+                getPLRequest.open("POST", `${API.address}/getparticipate_lessons`);
+                getPLRequest.onreadystatechange = () => {
+                    if (getPLRequest.readyState === 4) {
+                        if (getPLRequest.status === 200) {
+                            const result = JSON.parse(getPLRequest.responseText);
     
+                            if (result.success === true) {
+                                const PL = result.participate_lessons;
+                                resolve(PL);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if (token) {
+                    getPLRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+    
+                if (toSend) {
+                    const requestBody = JSON.stringify(toSend);
+                    getPLRequest.setRequestHeader('Content-Type', 'application/json');
+                    getPLRequest.send(requestBody);
+                } else {
+                    const userId = API.getId();
+                    const requestBody = JSON.stringify({ user_id: API.getId() });
+                    getPLRequest.setRequestHeader('Content-Type', 'application/json');
+                    getPLRequest.send(requestBody);
+                }
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static register(toSend){
+        try{
+            const registerRequest = new XMLHttpRequest();
+            registerRequest.open("POST", `${API.address}/register`);
+            registerRequest.onreadystatechange = () => {
+                if(registerRequest.readyState === 4){
+                    if(registerRequest.status === 200){
+                        }
+                    }
+                }
+        
+        registerRequest.setRequestHeader("Content-type", "application/json");
+        registerRequest.send(JSON.stringify(toSend));
+    } catch(e) {
+        console.log(e);
+    }
+    }
 }

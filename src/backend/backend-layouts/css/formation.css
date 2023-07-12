@@ -1,0 +1,25 @@
+body, main {
+    width:100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+body::-webkit-scrollbar, main::-webkit-scrollbar {
+    display: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 200%;
+}
+
+.forma-card {
+    width: 80%;
+    border: gray solid 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

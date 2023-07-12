@@ -8,7 +8,6 @@ let cal;
 window.onload = () => {
     table = document.getElementById("calendar");
     cal = new Calendar(new CookMasterDate(), table);
-    cal.display();
 }
 
 const switchToNextMonth = () => {
