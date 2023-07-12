@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Facture</title>
+    <style>
+        /* Styles for the invoice template */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .invoice {
+            background-color: #f8f8f8;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .invoice-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .invoice-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .invoice-details .left {
+            flex: 1;
+        }
+
+        .invoice-details .right {
+            flex: 1;
+            text-align: right;
+        }
+
+        .invoice-items {
+            margin-bottom: 20px;
+        }
+
+        .invoice-items table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .invoice-items th,
+        .invoice-items td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .invoice-items th {
+            background-color: #e1e1e1;
+        }
+
+        .invoice-total {
+            text-align: right;
+        }
+
+        .invoice-total h3 {
+            margin-top: 10px;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="invoice">
+        <div class="invoice-header">
+            <h1>Facture</h1>
+        </div>
+        <div class="invoice-details">
+            <div class="left">
+                <p><strong>Emetteur:</strong> <span id="emitterName"></span></p>
+                <p><strong>Adresse:</strong> <span id="emitterAddress"></span></p>
+                <p><strong>Téléphone:</strong> <span id="emitterPhone"></span></p>
+            </div>
+            <div class="right">
+                <p><strong>Date:</strong> <span id="invoiceDate"></span></p>
+                <p><strong>Numéro de facture:</strong> <span id="invoiceNumber"></span></p>
+            </div>
+        </div>
+        <div class="invoice-items">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceItemsTableBody">
+                    <!-- Invoice items dynamically generated here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="invoice-total">
+            <h3 id="totalAmount"></h3>
+        </div>
+        <button id="generate">Générer le PDF</button>
+    </div>
+
+    <script type="text/javascript">
+        function generatePDF(emitterName, emitterAddress, emitterPhone, invoiceDate, invoiceNumber, items, totalAmount) {
+            document.getElementById("emitterName").textContent = emitterName;
+            document.getElementById("emitterAddress").textContent = emitterAddress;
+            document.getElementById("emitterPhone").textContent = emitterPhone;
+            document.getElementById("invoiceDate").textContent = invoiceDate;
+            document.getElementById("invoiceNumber").textContent = invoiceNumber;
+
+            const invoiceItemsTableBody = document.getElementById("invoiceItemsTableBody");
+            invoiceItemsTableBody.innerHTML = "";
+
+            items.forEach(item => {
+                const itemRow = document.createElement("tr");
+                const descriptionCell = document.createElement("td");
+                const quantityCell = document.createElement("td");
+                const unitPriceCell = document.createElement("td");
+                const totalCell = document.createElement("td");
+
+                descriptionCell.textContent = item.description;
+                quantityCell.textContent = item.quantity;
+                unitPriceCell.textContent = item.unitPrice;
+                totalCell.textContent = item.total;
+
+                itemRow.appendChild(descriptionCell);
+                itemRow.appendChild(quantityCell);
+                itemRow.appendChild(unitPriceCell);
+                itemRow.appendChild(totalCell);
+
+                invoiceItemsTableBody.appendChild(itemRow);
+            });
+
+            document.getElementById("totalAmount").textContent = `Total: ${totalAmount}`;
+
+            const invoice = document.querySelector(".invoice");
+            const options = {
+                margin: 1,
+                filename: 'facture.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(options).from(invoice).save();
+        }
+
+        document.getElementById("generate").addEventListener("click", function() {
+            const items = [
+                { description: "Produit 1", quantity: 2, unitPrice: "10€", total: "20€" },
+                { description: "Produit 2", quantity: 1, unitPrice: "15€", total: "15€" }
+            ];
+
+            generatePDF(
+                "Votre nom ou nom de votre entreprise",
+                "Votre adresse",
+                "Votre numéro de téléphone",
+                "12 juillet 2023",
+                "001",
+                items,
+                "35€"
+            );
+        });
+    </script>
+</body>
+</html>
