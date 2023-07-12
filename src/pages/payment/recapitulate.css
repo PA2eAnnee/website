@@ -1,0 +1,56 @@
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-size: cover !important;
+    background-repeat: no-repeat;
+    background: url('../../img/background-register.jpg');
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+main {
+    width: 80%;
+    height: 80vh;
+    display: flex;
+    justify-content: space-between;
+    margin: 5%;
+    font-family: 'Alumatica';
+}
+
+#toPay , #userInfo{
+    width: 40%;
+    height: 100%;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#userInfo form {
+    height: 100%;
+}
+
+.recap-row {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}
+
+@font-face {
+    font-family: 'Alumatica';
+    src: url('../../fonts/Alumatica-Regular.woff2') format('woff2');
+    src: url('../../fonts/Alumatica-Regular.eot?') format('embedded-opentype'),
+         url('../../fonts/Alumatica-Regular.woff2') format('woff2'),
+         url('../../fonts/Alumatica-Regular.woff') format('woff'),
+         url('../../fonts/Alumatica-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

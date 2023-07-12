@@ -1,3 +1,5 @@
+import { AddArticlePopup } from "../stock/AddArticlePopup.js";
+
 export class List {
     elems = [];
     container;
@@ -25,7 +27,7 @@ export class List {
         const addButton = document.createElement('button');
         addButton.innerText = 'Add';
         addButton.onclick = () => {
-            const addPopup = new this.addPopupType;
+            const addPopup = new AddArticlePopup(this);
             addPopup.generate();
         };
 

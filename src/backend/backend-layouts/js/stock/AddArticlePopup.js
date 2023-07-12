@@ -1,20 +1,19 @@
 import {Popup} from '../global/Popup.js';
-import { AddArticleForm } from './AddArticleForm.js';
+import {AddArticleForm} from './AddArticleForm.js';
 
 export class AddArticlePopup extends Popup {
-    id;
-
-    constructor(id) {
+    list;
+    constructor(list) {
         super();
-        this.id = id;
+        this.list = list;
     }
 
     generate() {
         const formContainer = document.createElement("form");
         const popupTitle = document.createElement("h2");
-        popupTitle.innerText=`Edit ${this.description}`;
+        popupTitle.innerText="Add new Article";
         formContainer.appendChild(popupTitle);
-        const loginForm = new AddArticleForm(formContainer,"Add", this.id, this, this.list);
+        const loginForm = new AddArticleForm(formContainer,"Add", this, this.list);
 
         const inputs = [];
 
