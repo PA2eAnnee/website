@@ -857,4 +857,232 @@ export class API{
             console.log(e);
         }
     }
+
+    static addTicket(toSend) {
+        try {
+            return new Promise((resolve, reject) => {
+                const addTicketRequest = new XMLHttpRequest();
+                addTicketRequest.open("POST", `${API.address}/tickets`);
+                addTicketRequest.onreadystatechange = () => {
+                    if(addTicketRequest.readyState === 4) {
+                        if(addTicketRequest.status === 200) {
+                            const result = JSON.parse(addTicketRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    addTicketRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                addTicketRequest.send(JSON.stringify(toSend));
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static deleteSite(site_id) {
+        console.log("ok");
+        try {
+            return new Promise((resolve, reject) => {
+                const deleteSiteRequest = new XMLHttpRequest();
+                deleteSiteRequest.open("DELETE", `${API.address}/sites/${site_id}`);
+                deleteSiteRequest.onreadystatechange = () => {
+                    if(deleteSiteRequest.readyState === 4) {
+                        if(deleteSiteRequest.status === 200) {
+                            const result = JSON.parse(deleteSiteRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    deleteSiteRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                deleteSiteRequest.send(JSON.stringify({id_site: `${site_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static deleteArticle(article_id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const deleteArticleRequest = new XMLHttpRequest();
+                deleteArticleRequest.open("DELETE", `${API.address}/articles/${article_id}`);
+                deleteArticleRequest.onreadystatechange = () => {
+                    if(deleteArticleRequest.readyState === 4) {
+                        if(deleteArticleRequest.status === 200) {
+                            const result = JSON.parse(deleteArticleRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    deleteArticleRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                deleteArticleRequest.send(JSON.stringify({id_article: `${article_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static deleteLesson(lesson_id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const deleteLessonRequest = new XMLHttpRequest();
+                deleteLessonRequest.open("DELETE", `${API.address}/lessons/${lesson_id}`);
+                deleteLessonRequest.onreadystatechange = () => {
+                    if(deleteLessonRequest.readyState === 4) {
+                        if(deleteLessonRequest.status === 200) {
+                            const result = JSON.parse(deleteLessonRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    deleteLessonRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                deleteLessonRequest.send(JSON.stringify({id_lesson: `${lesson_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static deleteEvent(event_id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const deleteEventRequest = new XMLHttpRequest();
+                deleteEventRequest.open("DELETE", `${API.address}/events/${event_id}`);
+                deleteEventRequest.onreadystatechange = () => {
+                    if(deleteEventRequest.readyState === 4) {
+                        if(deleteEventRequest.status === 200) {
+                            const result = JSON.parse(deleteEventRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    deleteEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                deleteEventRequest.send(JSON.stringify({id_event: `${event_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static deleteLesson(lesson_id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const deleteLessonRequest = new XMLHttpRequest();
+                deleteLessonRequest.open("DELETE", `${API.address}/lessons/${lesson_id}`);
+                deleteLessonRequest.onreadystatechange = () => {
+                    if(deleteLessonRequest.readyState === 4) {
+                        if(deleteLessonRequest.status === 200) {
+                            const result = JSON.parse(deleteLessonRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    deleteLessonRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                deleteLessonRequest.send(JSON.stringify({id_lesson: `${lesson_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static deleteRecipe(recipe_id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const deleteRecipeRequest = new XMLHttpRequest();
+                deleteRecipeRequest.open("DELETE", `${API.address}/recipes/${recipe_id}`);
+                deleteRecipeRequest.onreadystatechange = () => {
+                    if(deleteRecipeRequest.readyState === 4) {
+                        if(deleteRecipeRequest.status === 200) {
+                            const result = JSON.parse(deleteRecipeRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    deleteRecipeRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                deleteRecipeRequest.send(JSON.stringify({id_recipe: `${recipe_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static deleteCourse(cours_id) {
+        try {
+            return new Promise((resolve, reject) => {
+                const deleteCoursRequest = new XMLHttpRequest();
+                deleteCoursRequest.open("DELETE", `${API.address}/cours/${cours_id}`);
+                deleteCoursRequest.onreadystatechange = () => {
+                    if(deleteCoursRequest.readyState === 4) {
+                        if(deleteCoursRequest.status === 200) {
+                            const result = JSON.parse(deleteCoursRequest.responseText);
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(false);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    deleteCoursRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                deleteCoursRequest.send(JSON.stringify({id_cours: `${cours_id}`}));
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
 }

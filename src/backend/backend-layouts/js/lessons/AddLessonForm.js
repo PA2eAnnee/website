@@ -1,45 +1,24 @@
 import {Form} from '../global/Form.js';
 import {API} from '../global/API.js';
 
-export class AddArticleForm extends Form {
+export class AddLessonForm extends Form {
 
     constructor() {
         const container = document.getElementsByTagName("form")[0];
-        const buttonText = "Create article";
+        const buttonText = "Create lesson";
         super(container, buttonText);
         this.inPopup = false;
         const inputs = [];
         inputs.push({
             name: "name",
-            placeholder: "Name",
+            placeholder: "name",
             type: "text",
             required: true
         });
 
         inputs.push({
             name: "description",
-            placeholder: "Description",
-            type: "text",
-            required: true
-        });
-
-        inputs.push({
-            name: "stock",
-            placeholder: "Stock",
-            type: "number",
-            required: true
-        });
-
-        inputs.push({
-            name: "price",
-            placeholder: "Price",
-            type: "number",
-            required: true
-        });
-
-        inputs.push({
-            name: "picture",
-            placeholder: "Picture",
+            placeholder: "description",
             type: "text",
             required: true
         });
@@ -57,19 +36,10 @@ export class AddArticleForm extends Form {
                 case "description":
                     toSend.description = input.value;
                     break;
-                case "stock":
-                    toSend.stock = input.value;
-                    break;
-                case "price":
-                    toSend.price = input.value;
-                    break;
-                case "picture":
-                    toSend.picture = input.value;
-                    break;
             }
         }
         
-        API.addArticle(toSend).then(() => {
+        API.addLesson(toSend).then(() => {
             console.log("ok");
         }).catch((e) => {
             console.log(e);

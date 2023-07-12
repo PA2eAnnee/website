@@ -7,10 +7,12 @@ export class ArticleList extends List {
     constructor() {
         super();
         super.setCategs(["In stock", "Not available"]);
-        super.setTheads(["<input type='checkbox' name='select-all' id='select-all' class='list-checkbox'>", "Description", "Stock", "Prix", "Action"]);
+        super.setTheads(["<input type='checkbox' name='select-all' id='select-all' class='list-checkbox'>", "Name", "Description", "Stock", "Prix", "Picture", "Action"]);
+        this.nameToThead.set('name', 'Name');
         this.nameToThead.set('description', 'Description');
         this.nameToThead.set('stock', 'Stock');
         this.nameToThead.set('price', 'Prix');
+        this.nameToThead.set('picture', 'Picture');
         
         this.getArticles();
     }
@@ -19,7 +21,7 @@ export class ArticleList extends List {
         const articles = await API.getArticles();
         articles.forEach(article => {
             const articleR = new ArticleRow(article.id, this);
-            articleR.generate(article.description, article.stock, article.price);
+            articleR.generate(article.name, article.description, article.stock, article.price, article.picture);
             super.addToList(articleR);
         })
         this.display();

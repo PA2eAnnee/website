@@ -1,5 +1,7 @@
 import { ListRow } from "../global/ListRow.js";
 import {EditSitePopup} from "./EditSitePopup.js";
+import {ConfirmDeletePopup} from "../global/ConfirmDeletePopup.js";
+import { API } from "../global/API.js";
 
 export class SiteRow extends ListRow {
     list;
@@ -22,8 +24,22 @@ export class SiteRow extends ListRow {
         editImage.onclick = () => {
             const popup = new EditSitePopup(address, postcode, this.id, this.list);
             popup.generate(document.createElement("div"));
+        } 
+        const deleteImage = document.createElement('img');
+        deleteImage.src = '../../../img/trash-can.svg';
+        deleteImage.width = 20;
+        deleteImage.height = 20;
+        deleteImage.onclick = () => {
+            const popup = new ConfirmDeletePopup(() => {
+                API.deleteSite(this.id);
+                this.list.removeItemFromList(this.id);
+                return true;     
+            });
+
+            popup.generate(document.createElement("div"));
         }
         actionTd.appendChild(editImage);
+        actionTd.appendChild(deleteImage);
         super.appendToRow(addressTd);
         super.appendToRow(postcodeTd);
         super.appendToRow(actionTd);

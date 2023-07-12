@@ -1,5 +1,7 @@
 import { ListRow } from "../global/ListRow.js";
 import { EditEventPopup } from "./EditEventPopup.js";
+import {ConfirmDeletePopup} from "../global/ConfirmDeletePopup.js";
+import { API } from "../global/API.js";
 
 export class EventRow extends ListRow {
     list;
@@ -31,7 +33,21 @@ export class EventRow extends ListRow {
             const popup = new EditEventPopup(description, type, max_members, price, start_date, end_date, this.id, this.list);
             popup.generate(document.createElement("div"));
         }
+        const deleteImage = document.createElement('img');
+        deleteImage.src = '../../../img/trash-can.svg';
+        deleteImage.width = 20;
+        deleteImage.height = 20;
+        deleteImage.onclick = () => {
+            const popup = new ConfirmDeletePopup(() => {
+                API.deleteEvent(this.id);
+                this.list.removeItemFromList(this.id);
+                return true;     
+            });
+
+            popup.generate(document.createElement("div"));
+        }
         actionTd.appendChild(editImage);
+        actionTd.appendChild(deleteImage);
         super.appendToRow(descriptionTd);
         super.appendToRow(typeTd);
         super.appendToRow(max_membersTd);

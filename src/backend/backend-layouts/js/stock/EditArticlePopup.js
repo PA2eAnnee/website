@@ -2,17 +2,21 @@ import { Popup } from "../global/Popup.js";
 import { EditArticleForm } from "./EditArticleForm.js";
 
 export class EditArticlePopup extends Popup {
+    name;
     description;
     stock;
     price;
+    picture;
     id;
     list;
 
-    constructor(description, stock, price ,id, list) {
+    constructor(name, description, stock, price, picture, id, list) {
         super();
+        this.name = name;
         this.description = description;
         this.stock = stock;
         this.price = price;
+        this.picture = picture;
         this.id = id;
         this.list = list;
     }
@@ -21,10 +25,18 @@ export class EditArticlePopup extends Popup {
         const popupTitle = document.createElement("h2");
         popupTitle.innerText=`Edit ${this.description}`;
         formContainer.appendChild(popupTitle);
-        const loginForm = new EditArticleForm(formContainer,"Update", this.description, this.stock, this.price, this.id, this, this.list);
+        const loginForm = new EditArticleForm(formContainer,"Update", this.name, this.description, this.stock, this.price, this.picture, this.id, this, this.list);
 
         const inputs = [];
 
+        inputs.push({
+            name: "name",
+            placeholder: "name",
+            type: "text",
+            value: this.name,
+            required: true,
+
+        });
         inputs.push({
             name: "description",
             placeholder: "description",
@@ -48,6 +60,14 @@ export class EditArticlePopup extends Popup {
             value: this.price,
             required: true
         })
+        inputs.push({
+            name: "picture",
+            placeholder: "picture",
+            type: "text",
+            value: this.picture,
+            required: true,
+
+        });
 
         loginForm.setInputs(inputs);
         loginForm.display();

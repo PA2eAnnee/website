@@ -1,5 +1,7 @@
 import { ListRow } from "../global/ListRow.js";
 import {EditRecipePopup} from "./EditRecipePopup.js";
+import {ConfirmDeletePopup} from "../global/ConfirmDeletePopup.js";
+import { API } from "../global/API.js";
 
 export class RecipeRow extends ListRow {
     list;
@@ -29,7 +31,21 @@ export class RecipeRow extends ListRow {
             const popup = new EditRecipePopup(name, description, duration, complexityLevel, video, this.id, this.list);
             popup.generate(document.createElement("div"));
         }
+        const deleteImage = document.createElement('img');
+        deleteImage.src = '../../../img/trash-can.svg';
+        deleteImage.width = 20;
+        deleteImage.height = 20;
+        deleteImage.onclick = () => {
+            const popup = new ConfirmDeletePopup(() => {
+                API.deleteRecipe(this.id);
+                this.list.removeItemFromList(this.id);
+                return true;     
+            });
+
+            popup.generate(document.createElement("div"));
+        }
         actionTd.appendChild(editImage);
+        actionTd.appendChild(deleteImage);
         super.appendToRow(nameTd);
         super.appendToRow(descriptionTd);
         super.appendToRow(durationTd);
