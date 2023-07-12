@@ -16,7 +16,9 @@ export class Recapitulation {
     generate() {
         if(this.shop) {
             API.getArticles().then((AllArticles) => {
+                
                 const basket = JSON.parse(API.getBasket());
+                console.log(API.getBasket());
                 const articles = [];
                 let total = 0;
                 let i = 0;
@@ -33,6 +35,7 @@ export class Recapitulation {
                         i++;
                     }
                 }
+                document.cookie = `total_order=${total};path=/`;
                 const totalP = document.createElement("p");
                 articles.forEach(article => {
                     const div = document.createElement("div");
@@ -44,14 +47,16 @@ export class Recapitulation {
 
                     const quantityPicker = new QuantityPicker(1, article.article.stock, article.amount, () => {
                         total += article.article.price;
-                        totalP.innerText = `total: ${total}`;
                         basket[article.article.id]++;
-                        document.cookie = `basket=${JSON.stringify(basket)}`;
+                        totalP.innerText = `total: ${total}`;
+                        document.cookie = `basket=${JSON.stringify(basket)};path=/`;
+                        document.cookie = `total_order=${total};path=/`;
                     }, () => {
                         total -= article.article.price;
                         totalP.innerText = `total: ${total}`;
                         basket[article.article.id]--;
-                        document.cookie = `basket=${JSON.stringify(basket)}`;
+                        document.cookie = `basket=${JSON.stringify(basket)};path=/`;
+                        document.cookie = `total_order=${total};path=/`;
                     });
                     div.appendChild(nameP);
                     div.appendChild(priceP);

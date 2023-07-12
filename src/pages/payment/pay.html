@@ -2,27 +2,7 @@
 <html>
 <head>
   <title>Formulaire de paiement</title>
-  <style>
-    #payment-form {
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 20px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-  
-    #card-element {
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 4px;
-    }
-  
-    #card-errors {
-      color: red;
-      margin-top: 10px;
-    }
-  </style>
+  <link rel="stylesheet" href="../../css/popup.css">
 </head>
 <body>
   <div id="payment-form">
@@ -35,7 +15,8 @@
   </div>
   
   <script src="https://js.stripe.com/v3/"></script>
-  <script>
+  <script type="module">
+    import {API} from "../../backend/backend-layouts/js/global/API.js";
     // Initialisation de Stripe avec la clé publique
     var stripe = Stripe('pk_test_51NOgBaDOtbT2jeqrWCOa9rsNv2ayhhTupdlh7R1P17uV8hsljrsNoQIY9K66pYP3m7DJ54npqtHokYLZsT2br8kC00O0Pyp06L');
   
@@ -62,8 +43,8 @@
       event.preventDefault();
       
       // Récupération du montant du paiement depuis le formulaire
-      var prixTotal = 100; // Remplacez par votre logique de calcul du prix total
-  
+      var prixTotal = parseInt(API.getTotalBasket()) * 100; // Remplacez par votre logique de calcul du prix total
+
       // Récupérer les informations de la carte de crédit
       stripe.createPaymentMethod({
         type: 'card',
@@ -83,7 +64,26 @@
           xhr.setRequestHeader('Content-Type', 'application/json');
           xhr.onload = function() {
             if (xhr.status === 200) {
-              // Le paiement a été traité avec succès
+              switch(API.getOrderType()) {
+                case "shop":
+                  const basket = JSON.parse(API.getBasket());
+                  API.getArticles().then(articles => {
+                    console.log(articles);
+                    for (const article of Object.keys(basket)) {
+                    articles.forEach(articleInfo => {
+                      if(articleInfo.id == article) {
+                        API.updateArticles(article, {stock: parseInt(articleInfo.stock) - parseInt(basket[article])});
+                      }
+                    })
+                  }
+                  })
+                  document.cookie = "basket={};path/";
+                  document.cookie = "total_order=0;path/";
+                  document.cookie = "type_order=null;path/";
+                  break;
+                  default:
+                    break;  
+              }
               console.log('Paiement effectué avec succès !');
             } else {
               // Gérer les erreurs de traitement du paiement

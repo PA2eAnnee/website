@@ -46,10 +46,6 @@ export class BuyArticlePopup extends Popup {
     }
 
     addtoBasket(nb) {
-        if(!API.getBasket()) {
-            document.cookie = "basket={}"
-        }
-
         const basket = API.getBasket();
         const parsedBasket = JSON.parse(basket);
         if(parsedBasket[this.id]) {
@@ -58,6 +54,6 @@ export class BuyArticlePopup extends Popup {
             parsedBasket[this.id] = nb;
         }
 
-        document.cookie = `basket=${JSON.stringify(parsedBasket)}`;
+        document.cookie = `basket=${JSON.stringify(parsedBasket)};path=/`;
     }
 }

@@ -72,6 +72,7 @@ export class PaymentUserForm extends Form {
         }
 
         send() {
+            document.cookie = "type_order=shop;path=/";
             const paymentPopup = new PaymentPopup();
             paymentPopup.generate();
         }

@@ -13,10 +13,18 @@ export class API{
                             const userToken = userInfos.connection.connection.token;
                             document.cookie = `token=${userToken}`;
                             const userId = userInfos.connection.connection.id;
-                            document.cookie = `id=${userId}`; 
+                            document.cookie = `userId=${userId}`; 
                             const userRole = userInfos.connection.connection.role;
                             document.cookie = `role=${userRole}`;
                             window.location = './backend/backend.html';
+                            if(!API.getBasket()) {
+                                document.cookie = "basket={}"
+                            }
+                            
+                            if (!API.getBasket()) {
+                              browser.cookies.set({ name: 'basket', value: '{}', path: '/' });
+                            }
+                            
                         }
                     }
                 }
@@ -49,7 +57,7 @@ export class API{
 
     static getId() {
         const cookies = document.cookie;
-        const idKey = "id=";
+        const idKey = "userId=";
         const cookieStart = cookies.indexOf(idKey);
         let id = null;
     
@@ -93,6 +101,38 @@ export class API{
             basket = decodeURIComponent(cookies.substring(cookieStart + basketKey.length, cookieEnd));
         }
         return basket;
+    }
+
+    static getTotalBasket() {
+        const cookies = document.cookie;
+        const totalKey = "total_order=";
+        const cookieStart = cookies.indexOf(totalKey);
+        let total = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            total = decodeURIComponent(cookies.substring(cookieStart + totalKey.length, cookieEnd));
+        }
+        return total;
+    }
+
+    static getOrderType() {
+        const cookies = document.cookie;
+        const typeKey = "type_order=";
+        const cookieStart = cookies.indexOf(typeKey);
+        let type = null;
+    
+        if (cookieStart !== -1) {
+            let cookieEnd = cookies.indexOf(";", cookieStart);
+            if (cookieEnd === -1) {
+                cookieEnd = cookies.length;
+            }
+            type = decodeURIComponent(cookies.substring(cookieStart + typeKey.length, cookieEnd));
+        }
+        return type;
     }
   
     static getUsers(toSend) {
