@@ -82,6 +82,7 @@ export class API{
         return role;
     }
 
+
     static getBasket() {
         const cookies = document.cookie;
         const basketKey = "basket=";
@@ -146,34 +147,44 @@ export class API{
         return event;
     }
 
-    static getUsers() {
+    static getUsers(toSend) {
         try {
             return new Promise(resolve => {
-            const getUsersRequest = new XMLHttpRequest();
-            getUsersRequest.open("POST", `${API.address}/getusers`);
-            getUsersRequest.onreadystatechange = () => {
-                if(getUsersRequest.readyState === 4) {
-                    if(getUsersRequest.status === 200) {
-                        const result = JSON.parse(getUsersRequest.responseText);
-                        
-                            if(result.success === true){
+                const getUsersRequest = new XMLHttpRequest();
+                getUsersRequest.open("POST", `${API.address}/getusers`);
+                getUsersRequest.onreadystatechange = () => {
+                    if (getUsersRequest.readyState === 4) {
+                        if (getUsersRequest.status === 200) {
+                            const result = JSON.parse(getUsersRequest.responseText);
+    
+                            if (result.success === true) {
                                 const users = result.users;
                                 resolve(users);
                             }
+                        }
                     }
                 }
-            }
+    
                 const token = API.getToken();
                 console.log(token);
-                if(token) {
+    
+                if (token) {
                     getUsersRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
-                getUsersRequest.send();
-        });
-        } catch(e) {
+    
+                if (toSend) {
+                    const requestBody = JSON.stringify(toSend);
+                    getUsersRequest.setRequestHeader('Content-Type', 'application/json');
+                    getUsersRequest.send(requestBody);
+                } else {
+                    getUsersRequest.send();
+                }
+            });
+        } catch (e) {
             console.log(e);
         }
     }
+    
 
     static getArticles() {
         try {
@@ -790,33 +801,45 @@ export class API{
         }
     }
 
-    static getMyEvents() {
+    static getMyEvents(toSend) {
         try {
             return new Promise(resolve => {
-            const getMyEventRequest = new XMLHttpRequest();
-            getMyEventRequest.open("POST", `${API.address}/getmygoestos`);
-            getMyEventRequest.onreadystatechange = () => {
-                if(getMyEventRequest.readyState === 4) {
-                    if(getMyEventRequest.status === 200) {
-                        const result = JSON.parse(getMyEventRequest.responseText);
-                            if(result.success === true){
+                const getMyEventRequest = new XMLHttpRequest();
+                getMyEventRequest.open("POST", `${API.address}/getmygoestos`);
+                getMyEventRequest.onreadystatechange = () => {
+                    if (getMyEventRequest.readyState === 4) {
+                        if (getMyEventRequest.status === 200) {
+                            const result = JSON.parse(getMyEventRequest.responseText);
+    
+                            if (result.success === true) {
                                 const events = result.goestos;
                                 resolve(events);
                             }
-
+                        }
                     }
                 }
-            }
+    
                 const token = API.getToken();
-                if(token) {
+                if (token) {
                     getMyEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
-                getMyEventRequest.send(JSON.stringify({id_user: API.getId()}));
-        });
-        } catch(e) {
+    
+                if (toSend) {
+                    const requestBody = JSON.stringify(toSend);
+                    getMyEventRequest.setRequestHeader('Content-Type', 'application/json');
+                    getMyEventRequest.send(requestBody);
+                } else {
+                    const userId = API.getId();
+                    const requestBody = JSON.stringify({ id_user: userId });
+                    getMyEventRequest.setRequestHeader('Content-Type', 'application/json');
+                    getMyEventRequest.send(requestBody);
+                }
+            });
+        } catch (e) {
             console.log(e);
         }
     }
+    
 
     static joinEvent(event_id) {
         try {
