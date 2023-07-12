@@ -44,7 +44,6 @@
       
       // Récupération du montant du paiement depuis le formulaire
       var prixTotal = parseInt(API.getTotalBasket()) * 100; // Remplacez par votre logique de calcul du prix total
-
       // Récupérer les informations de la carte de crédit
       stripe.createPaymentMethod({
         type: 'card',

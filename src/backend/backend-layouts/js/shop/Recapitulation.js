@@ -16,9 +16,7 @@ export class Recapitulation {
     generate() {
         if(this.shop) {
             API.getArticles().then((AllArticles) => {
-                
                 const basket = JSON.parse(API.getBasket());
-                console.log(API.getBasket());
                 const articles = [];
                 let total = 0;
                 let i = 0;
