@@ -13,18 +13,10 @@ export class API{
                             const userToken = userInfos.connection.connection.token;
                             document.cookie = `token=${userToken}`;
                             const userId = userInfos.connection.connection.id;
-                            document.cookie = `userId=${userId}`; 
+                            document.cookie = `id=${userId}`; 
                             const userRole = userInfos.connection.connection.role;
                             document.cookie = `role=${userRole}`;
                             window.location = './backend/backend.html';
-                            if(!API.getBasket()) {
-                                document.cookie = "basket={}"
-                            }
-                            
-                            if (!API.getBasket()) {
-                              browser.cookies.set({ name: 'basket', value: '{}', path: '/' });
-                            }
-                            
                         }
                     }
                 }
@@ -57,7 +49,7 @@ export class API{
 
     static getId() {
         const cookies = document.cookie;
-        const idKey = "userId=";
+        const idKey = "id=";
         const cookieStart = cookies.indexOf(idKey);
         let id = null;
     
@@ -87,87 +79,34 @@ export class API{
         return role;
     }
 
-    static getBasket() {
-        const cookies = document.cookie;
-        const basketKey = "basket=";
-        const cookieStart = cookies.indexOf(basketKey);
-        let basket = null;
-    
-        if (cookieStart !== -1) {
-            let cookieEnd = cookies.indexOf(";", cookieStart);
-            if (cookieEnd === -1) {
-                cookieEnd = cookies.length;
-            }
-            basket = decodeURIComponent(cookies.substring(cookieStart + basketKey.length, cookieEnd));
-        }
-        return basket;
-    }
-
-    static getTotalBasket() {
-        const cookies = document.cookie;
-        const totalKey = "total_order=";
-        const cookieStart = cookies.indexOf(totalKey);
-        let total = null;
-    
-        if (cookieStart !== -1) {
-            let cookieEnd = cookies.indexOf(";", cookieStart);
-            if (cookieEnd === -1) {
-                cookieEnd = cookies.length;
-            }
-            total = decodeURIComponent(cookies.substring(cookieStart + totalKey.length, cookieEnd));
-        }
-        return total;
-    }
-
-    static getOrderType() {
-        const cookies = document.cookie;
-        const typeKey = "type_order=";
-        const cookieStart = cookies.indexOf(typeKey);
-        let type = null;
-    
-        if (cookieStart !== -1) {
-            let cookieEnd = cookies.indexOf(";", cookieStart);
-            if (cookieEnd === -1) {
-                cookieEnd = cookies.length;
-            }
-            type = decodeURIComponent(cookies.substring(cookieStart + typeKey.length, cookieEnd));
-        }
-        return type;
-    }
-  
-    static getUsers(toSend) {
+    static getUsers() {
         try {
             return new Promise(resolve => {
-                const getUsersRequest = new XMLHttpRequest();
-                getUsersRequest.open("POST", `${API.address}/getusers`);
-                getUsersRequest.onreadystatechange = () => {
-                    if (getUsersRequest.readyState === 4) {
-                        if (getUsersRequest.status === 200) {
-                            const result = JSON.parse(getUsersRequest.responseText);
-    
-                            if (result.success === true) {
+            const getUsersRequest = new XMLHttpRequest();
+            getUsersRequest.open("POST", `${API.address}/getusers`);
+            getUsersRequest.onreadystatechange = () => {
+                if(getUsersRequest.readyState === 4) {
+                    if(getUsersRequest.status === 200) {
+                        const result = JSON.parse(getUsersRequest.responseText);
+                        
+                            if(result.success === true){
                                 const users = result.users;
                                 resolve(users);
                             }
-                        }
                     }
                 }
-    
+            }
                 const token = API.getToken();
                 console.log(token);
-                if (token) {
+                if(token) {
                     getUsersRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
-                    const body = JSON.stringify(toSend);
-                    console.log(body);
-                    getUsersRequest.setRequestHeader("Content-Type", "application/json");
-                    getUsersRequest.send(body);
-            });
-        } catch (e) {
+                getUsersRequest.send();
+        });
+        } catch(e) {
             console.log(e);
         }
     }
-    
 
     static getArticles() {
         try {
@@ -215,6 +154,181 @@ export class API{
                         updateArticlesRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                     }
                     updateArticlesRequest.send(JSON.stringify(toSend));
+                })
+            } catch(e) {
+                console.log(e);
+            }
+        } 
+    }
+
+    static updateEvents(id, toSend) {
+        if(Object.keys(toSend).length > 0 && typeof id !== undefined) {
+            try {
+                return new Promise((resolve, reject) => {
+                    const updateEventsRequest = new XMLHttpRequest();
+                    updateEventsRequest.open("PATCH", `${API.address}/events/${id}`);
+                    updateEventsRequest.onreadystatechange = () => {
+                        if(updateEventsRequest.readyState === 4) {
+                            const result = JSON.parse(updateEventsRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                    const token = API.getToken();
+                    if(token) {
+                        updateEventsRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                    }
+                    updateEventsRequest.send(JSON.stringify(toSend));
+                })
+            } catch(e) {
+                console.log(e);
+            }
+        } 
+    }
+
+    static updateLessons(id, toSend) {
+        if(Object.keys(toSend).length > 0 && typeof id !== undefined) {
+            try {
+                return new Promise((resolve, reject) => {
+                    const updateLessonsRequest = new XMLHttpRequest();
+                    updateLessonsRequest.open("PATCH", `${API.address}/lessons/${id}`);
+                    updateLessonsRequest.onreadystatechange = () => {
+                        if(updateLessonsRequest.readyState === 4) {
+                            const result = JSON.parse(updateLessonsRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                    const token = API.getToken();
+                    if(token) {
+                        updateLessonsRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                    }
+                    updateLessonsRequest.send(JSON.stringify(toSend));
+                })
+            } catch(e) {
+                console.log(e);
+            }
+        } 
+    }
+
+    static updateRecipes(id, toSend) {
+        if(Object.keys(toSend).length > 0 && typeof id !== undefined) {
+            try {
+                return new Promise((resolve, reject) => {
+                    const updateRecipesRequest = new XMLHttpRequest();
+                    updateRecipesRequest.open("PATCH", `${API.address}/recipes/${id}`);
+                    updateRecipesRequest.onreadystatechange = () => {
+                        if(updateRecipesRequest.readyState === 4) {
+                            const result = JSON.parse(updateRecipesRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                    const token = API.getToken();
+                    if(token) {
+                        updateRecipesRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                    }
+                    updateRecipesRequest.send(JSON.stringify(toSend));
+                    console.log(JSON.stringify(toSend));
+                })
+            } catch(e) {
+                console.log(e);
+            }
+        } 
+    }
+
+    static updateSites(id, toSend) {
+        if(Object.keys(toSend).length > 0 && typeof id !== undefined) {
+            try {
+                return new Promise((resolve, reject) => {
+                    const updateSitesRequest = new XMLHttpRequest();
+                    updateSitesRequest.open("PATCH", `${API.address}/sites/${id}`);
+                    updateSitesRequest.onreadystatechange = () => {
+                        if(updateSitesRequest.readyState === 4) {
+                            const result = JSON.parse(updateSitesRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                    const token = API.getToken();
+                    if(token) {
+                        updateSitesRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                    }
+                    updateSitesRequest.send(JSON.stringify(toSend));
+                })
+            } catch(e) {
+                console.log(e);
+            }
+        } 
+    }
+
+    static updateCourses(id, toSend) {
+        if(Object.keys(toSend).length > 0 && typeof id !== undefined) {
+            try {
+                return new Promise((resolve, reject) => {
+                    const updateCoursesRequest = new XMLHttpRequest();
+                    updateCoursesRequest.open("PATCH", `${API.address}/cours/${id}`);
+                    updateCoursesRequest.onreadystatechange = () => {
+                        if(updateCoursesRequest.readyState === 4) {
+                            const result = JSON.parse(updateCoursesRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                    const token = API.getToken();
+                    if(token) {
+                        updateCoursesRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                    }
+                    updateCoursesRequest.send(JSON.stringify(toSend));
+                })
+            } catch(e) {
+                console.log(e);
+            }
+        } 
+    }
+
+    static updateTickets(id, toSend) {
+        if(Object.keys(toSend).length > 0 && typeof id !== undefined) {
+            try {
+                return new Promise((resolve, reject) => {
+                    const updateTicketsRequest = new XMLHttpRequest();
+                    updateTicketsRequest.open("PATCH", `${API.address}/tickets/${id}`);
+                    updateTicketsRequest.onreadystatechange = () => {
+                        if(updateTicketsRequest.readyState === 4) {
+                            const result = JSON.parse(updateTicketsRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                    const token = API.getToken();
+                    if(token) {
+                        updateTicketsRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                    }
+                    updateTicketsRequest.send(JSON.stringify(toSend));
                 })
             } catch(e) {
                 console.log(e);
@@ -342,6 +456,97 @@ export class API{
         }
     }
 
+    static getCourses() {
+        try {
+            return new Promise(resolve => {
+            const getCourseRequest = new XMLHttpRequest();
+            getCourseRequest.open("POST", `${API.address}/getcours`);
+            getCourseRequest.onreadystatechange = () => {
+                if(getCourseRequest.readyState === 4) {
+                    if(getCourseRequest.status === 200) {
+                        const result = JSON.parse(getCourseRequest.responseText);
+                            if(result.success === true){
+                                const courses = result.courses;
+                                resolve(courses);
+                            }
+                    }
+                }
+            }
+                const token = API.getToken();
+                if(token) {
+                    getCourseRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getCourseRequest.send();
+        });
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    static getFormations() {
+        try {
+            return new Promise(resolve => {
+            const getFormationRequest = new XMLHttpRequest();
+            getFormationRequest.open("POST", `${API.address}/getformations`);
+            getFormationRequest.onreadystatechange = () => {
+                if(getFormationRequest.readyState === 4) {
+                    if(getFormationRequest.status === 200) {
+                        const result = JSON.parse(getFormationRequest.responseText);
+
+                            if(result.success === true){
+                                const formations = result.formations;
+                                resolve(formations);
+                            }
+
+
+
+                    }
+                }
+            }
+                const token = API.getToken();
+                if(token) {
+                    getFormationRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getFormationRequest.send();
+        });
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    static getTickets() {
+        try {
+            return new Promise(resolve => {
+            const getTicketRequest = new XMLHttpRequest();
+            getTicketRequest.open("POST", `${API.address}/gettickets`);
+            getTicketRequest.onreadystatechange = () => {
+                if(getTicketRequest.readyState === 4) {
+                    if(getTicketRequest.status === 200) {
+                        const result = JSON.parse(getTicketRequest.responseText);
+
+                            if(result.success === true){
+                                const tickets = result.tickets;
+                                resolve(tickets);
+                            }
+
+
+
+                    }
+                }
+            }
+                const token = API.getToken();
+                if(token) {
+                    getTicketRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                getTicketRequest.send();
+        });
+        } catch(e) {
+            console.log(e);
+        }
+    }
+    
+
+
     static addEvent(toSend) {
         try {
             return new Promise((resolve, reject) => {
@@ -365,6 +570,122 @@ export class API{
                     addEventRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
                 addEventRequest.send(JSON.stringify(toSend));
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static addSite(toSend) {
+        try {
+            return new Promise((resolve, reject) => {
+                const addSiteRequest = new XMLHttpRequest();
+                addSiteRequest.open("POST", `${API.address}/sites`);
+                addSiteRequest.onreadystatechange = () => {
+                    if(addSiteRequest.readyState === 4) {
+                        if(addSiteRequest.status === 200) {
+                            const result = JSON.parse(addSiteRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    addSiteRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                addSiteRequest.send(JSON.stringify(toSend));
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static addCourse(toSend) {
+        try {
+            return new Promise((resolve, reject) => {
+                const addCourseRequest = new XMLHttpRequest();
+                addCourseRequest.open("POST", `${API.address}/cours`);
+                addCourseRequest.onreadystatechange = () => {
+                    if(addCourseRequest.readyState === 4) {
+                        if(addCourseRequest.status === 200) {
+                            const result = JSON.parse(addCourseRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    addCourseRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                addCourseRequest.send(JSON.stringify(toSend));
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    static addRecipe(toSend) {
+        try {
+            return new Promise((resolve, reject) => {
+                const addRecipeRequest = new XMLHttpRequest();
+                addRecipeRequest.open("POST", `${API.address}/recipe`);
+                addRecipeRequest.onreadystatechange = () => {
+                    if(addRecipeRequest.readyState === 4) {
+                        if(addRecipeRequest.status === 200) {
+                            const result = JSON.parse(addRecipeRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    addRecipeRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                addRecipeRequest.send(JSON.stringify(toSend));
+            })
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    
+    static addLesson(toSend) {
+        try {
+            return new Promise((resolve, reject) => {
+                const addLessonRequest = new XMLHttpRequest();
+                addLessonRequest.open("POST", `${API.address}/lessons`);
+                addLessonRequest.onreadystatechange = () => {
+                    if(addLessonRequest.readyState === 4) {
+                        if(addLessonRequest.status === 200) {
+                            const result = JSON.parse(addLessonRequest.responseText);
+
+                            if(result.success === true) {
+                                resolve(true);
+                            } else {
+                                reject(result.error);
+                            }
+                        }
+                    }
+                }
+                const token = API.getToken();
+                if(token) {
+                    addLessonRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                }
+                addLessonRequest.send(JSON.stringify(toSend));
             })
         } catch (e) {
             console.log(e);
@@ -486,15 +807,16 @@ export class API{
         }
     }
 
-    static chefJoinEvent(id) {
+    static deleteTicket(ticket_id) {
+        console.log("ok");
         try {
             return new Promise((resolve, reject) => {
-                const chefJoinRequest = new XMLHttpRequest();
-                chefJoinRequest.open("PATCH", `${API.address}/events/${id}`);
-                chefJoinRequest.onreadystatechange = () => {
-                    if(chefJoinRequest.readyState === 4) {
-                        if(chefJoinRequest.status === 200) {
-                            const result = JSON.parse(chefJoinRequest.responseText);
+                const deleteTicketRequest = new XMLHttpRequest();
+                deleteTicketRequest.open("DELETE", `${API.address}/tickets/${ticket_id}`);
+                deleteTicketRequest.onreadystatechange = () => {
+                    if(deleteTicketRequest.readyState === 4) {
+                        if(deleteTicketRequest.status === 200) {
+                            const result = JSON.parse(deleteTicketRequest.responseText);
                             if(result.success === true) {
                                 resolve(true);
                             } else {
@@ -505,9 +827,9 @@ export class API{
                 }
                 const token = API.getToken();
                 if(token) {
-                    chefJoinRequest.setRequestHeader('Authorization', 'Bearer ' + token);
+                    deleteTicketRequest.setRequestHeader('Authorization', 'Bearer ' + token);
                 }
-                chefJoinRequest.send(JSON.stringify({organizer: API.getId(), status: "PUBLISH"}));
+                deleteTicketRequest.send(JSON.stringify({id_ticket: `${ticket_id}`}));
             });
         } catch (e) {
             console.log(e);

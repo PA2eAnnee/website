@@ -1,14 +1,21 @@
 import {Form} from '../global/Form.js';
 import {API} from '../global/API.js';
 
-export class AddArticleForm extends Form {
+export class AddRecipeForm extends Form {
 
     constructor() {
         const container = document.getElementsByTagName("form")[0];
-        const buttonText = "Create article";
+        const buttonText = "Create recipe";
         super(container, buttonText);
         this.inPopup = false;
         const inputs = [];
+        inputs.push({
+            name: "name",
+            placeholder: "Name",
+            type: "text",
+            required: true
+        });
+
         inputs.push({
             name: "description",
             placeholder: "Description",
@@ -17,22 +24,22 @@ export class AddArticleForm extends Form {
         });
 
         inputs.push({
-            name: "stock",
-            placeholder: "Stock",
+            name: "duration",
+            placeholder: "Duration",
             type: "number",
             required: true
         });
 
         inputs.push({
-            name: "price",
-            placeholder: "Price",
-            type: "number",
+            name: "complexitylevel",
+            placeholder: "ComplexityLevel",
+            type: "text",
             required: true
         });
 
         inputs.push({
-            name: "picture",
-            placeholder: "Picture",
+            name: "video",
+            placeholder: "video",
             type: "text",
             required: true
         });
@@ -44,22 +51,25 @@ export class AddArticleForm extends Form {
         let toSend = {};
         for(const input of this.inputs) {
             switch(input.name) {
+                case "name":
+                    toSend.name = input.value;
+                    break;
                 case "description":
                     toSend.description = input.value;
                     break;
-                case "stock":
-                    toSend.stock = input.value;
+                case "duration":
+                    toSend.duration = input.value;
                     break;
-                case "price":
-                    toSend.price = input.value;
+                case "complexitylevel":
+                    toSend.complexityLevel = input.value;
                     break;
-                case "picture":
-                    toSend.picture = input.value;
+                case "video":
+                    toSend.video = input.value;
                     break;
             }
         }
         
-        API.addArticle(toSend).then(() => {
+        API.addRecipe(toSend).then(() => {
             console.log("ok");
         }).catch((e) => {
             console.log(e);

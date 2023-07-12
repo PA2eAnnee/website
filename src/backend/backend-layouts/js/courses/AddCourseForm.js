@@ -1,25 +1,25 @@
 import {Form} from '../global/Form.js';
 import {API} from '../global/API.js';
 
-export class AddArticleForm extends Form {
+export class AddCourseForm extends Form {
 
     constructor() {
         const container = document.getElementsByTagName("form")[0];
-        const buttonText = "Create article";
+        const buttonText = "Create course";
         super(container, buttonText);
         this.inPopup = false;
         const inputs = [];
         inputs.push({
-            name: "description",
-            placeholder: "Description",
+            name: "name",
+            placeholder: "Name",
             type: "text",
             required: true
         });
 
         inputs.push({
-            name: "stock",
-            placeholder: "Stock",
-            type: "number",
+            name: "description",
+            placeholder: "Description",
+            type: "text",
             required: true
         });
 
@@ -31,9 +31,16 @@ export class AddArticleForm extends Form {
         });
 
         inputs.push({
-            name: "picture",
-            placeholder: "Picture",
+            name: "type",
+            placeholder: "Type",
             type: "text",
+            required: true
+        });
+
+        inputs.push({
+            name: "course_date",
+            placeholder: "Course Date",
+            type: "date",
             required: true
         });
         this.setInputs(inputs);
@@ -42,24 +49,28 @@ export class AddArticleForm extends Form {
 
     send() {
         let toSend = {};
+        let date;
         for(const input of this.inputs) {
             switch(input.name) {
+                case "name":
+                    toSend.name = input.value;
+                    break;
                 case "description":
                     toSend.description = input.value;
-                    break;
-                case "stock":
-                    toSend.stock = input.value;
                     break;
                 case "price":
                     toSend.price = input.value;
                     break;
-                case "picture":
-                    toSend.picture = input.value;
+                case "type":
+                    toSend.type = input.value;
+                    break;
+                case "course_date":
+                    date = new Date(input.value);
                     break;
             }
         }
         
-        API.addArticle(toSend).then(() => {
+        API.addCourse(toSend).then(() => {
             console.log("ok");
         }).catch((e) => {
             console.log(e);
